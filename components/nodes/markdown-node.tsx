@@ -2,13 +2,14 @@ import { NodeCard } from "@/components/node-card";
 import { Button } from "@/components/ui/button";
 import { baseNodeDataSchema } from "@/lib/base-node";
 import { ComputeNodeFunction } from "@/lib/compute";
-import { RiCheckboxMultipleBlankLine, RiCheckboxMultipleFill, RiCodeLine } from "@remixicon/react";
+import { RiArrowRightUpLine, RiCheckboxMultipleBlankLine, RiCheckboxMultipleFill, RiCodeLine } from "@remixicon/react";
 import { Handle, Position, type NodeTypes } from "@xyflow/react";
 import { useCallback, useMemo, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { z } from "zod";
 import { ErrorNode } from "./error-node";
+import Link from "next/link";
 
 const markdownNodeDataSchema = baseNodeDataSchema.extend({
   text: z.string().optional(),
@@ -90,15 +91,39 @@ export const MarkdownNode: NodeTypes[keyof NodeTypes] = (props) => {
         </>
       }
     >
-      <div className="h-full overflow-auto p-3 nowheel">
+      <div className="h-full overflow-auto p-6 nowheel nopan cursor-auto select-text nodrag">
         {showRaw ? (
-          <pre className="font-mono h-full select-text cursor-text overflow-auto whitespace-pre-wrap nopan  nodrag">
+          <pre className="font-mono text-sm h-full overflow-auto whitespace-pre-wrap ">
             {parsedData.data.text}
           </pre>
         ) : (
-          <div className="prose mx-auto dark:prose-invert prose-neutral ">
+          <div className="prose prose-sm mx-auto prose-neutral dark:prose-invert prose-h1:font-display prose-h1:font-bold prose-h2:font-display prose-h2:font-bold prose-h3:font-display prose-h3:font-bold prose-strong:font-semibold prose-em:text-foreground prose-strong:text-foreground prose-code:before:content-none prose-code:bg-muted prose-code:after:content-none prose-ol:ml-0 prose-ol:list-outside prose-ol:list-decimal prose-ul:list-outside prose-ul:list-disc prose-thead:text-left break-words">
             {parsedData.data.text ? (
-              <Markdown remarkPlugins={[remarkGfm]}>{parsedData.data.text}</Markdown>
+              <Markdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  a: ({ children, href }) => {
+                    return (
+                      <Link
+                        href={href ?? "#"}
+                        target={"_blank"}
+                        className="bg-blue-500/20 text-foreground hover:bg-blue-500/10 rounded-sm px-2 py-0.5 no-underline"
+                      >
+                        {children}&nbsp;
+                        <RiArrowRightUpLine className="text-blue-500 inline-block size-5 -translate-y-px" />
+                      </Link>
+                    );
+                  },
+                  code: ({ children }) => {
+                    return <code className="bg-muted rounded-md px-1">{children}</code>;
+                  },
+                  pre: ({ children }) => {
+                    return <pre className="w-full overflow-x-auto rounded-md p-2">{children}</pre>;
+                  },
+                }}
+              >
+                {parsedData.data.text}
+              </Markdown>
             ) : (
               <span className="text-muted-foreground text-sm">No text</span>
             )}

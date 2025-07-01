@@ -2,6 +2,134 @@ import { Canvas } from "./canvas-store";
 
 const templates: Canvas[] = [
   {
+    id: "1751403205530-x7go9ca6a",
+    name: "Welcome",
+    nodes: [
+      {
+        data: {
+          prompt:
+            "# Streamline Your AI Workflow with `System Prompt`\n\n**System Prompt** is a free and open-source tool designed to simplify and enhance your interaction with AI models. Move beyond endlessly retyping the same instructions. With System Prompt, you can save, manage, and chain your AI queries in a powerful visual canvas, all while keeping your data private.\n\nBeing open-source means complete transparency. You can inspect the code, contribute to its development, and be confident that your data handling is secure and local.\n\n---\n\n### **Key Features:**\n\n* **Save and Reuse Prompts:** Never type the same query twice. Save your frequently used prompts—from proofreading a text to reformulating an email with a specific tone—for instant access.\n\n* **Visualize Your Workflow in a Canvas Environment:** Map out complex AI tasks with ease. Our intuitive canvas allows you to link prompts together using nodes and branches. Generate outputs in sequence or in parallel for powerful, automated workflows.\n\n* **Your Data Stays With You:** System Prompt is fully local. No data is ever stored on our servers. You bring your own API keys, ensuring your prompts, your content, and your credentials remain entirely within your control.\n\n* **Free & Open-Source:** All features are available at no cost. Our open-source model guarantees transparency and invites community collaboration. [GitHub](https://github.com/codyadam/system-prompt)",
+          dirty: false,
+          loading: false,
+          output:
+            "# Streamline Your AI Workflow with `System Prompt`\n\n**System Prompt** is a free and open-source tool designed to simplify and enhance your interaction with AI models. Move beyond endlessly retyping the same instructions. With System Prompt, you can save, manage, and chain your AI queries in a powerful visual canvas, all while keeping your data private.\n\nBeing open-source means complete transparency. You can inspect the code, contribute to its development, and be confident that your data handling is secure and local.\n\n---\n\n### **Key Features:**\n\n* **Save and Reuse Prompts:** Never type the same query twice. Save your frequently used prompts—from proofreading a text to reformulating an email with a specific tone—for instant access.\n\n* **Visualize Your Workflow in a Canvas Environment:** Map out complex AI tasks with ease. Our intuitive canvas allows you to link prompts together using nodes and branches. Generate outputs in sequence or in parallel for powerful, automated workflows.\n\n* **Your Data Stays With You:** System Prompt is fully local. No data is ever stored on our servers. You bring your own API keys, ensuring your prompts, your content, and your credentials remain entirely within your control.\n\n* **Free & Open-Source:** All features are available at no cost. Our open-source model guarantees transparency and invites community collaboration. [GitHub](https://github.com/codyadam/system-prompt)",
+          label: "welcome message",
+        },
+        position: {
+          x: -341.665330998432,
+          y: -31.172721333312353,
+        },
+        height: 269,
+        width: 489,
+        type: "prompt",
+        id: "1751403213284-7dr7luzzv",
+        measured: {
+          width: 489,
+          height: 269,
+        },
+        selected: false,
+        dragging: false,
+        resizing: false,
+      },
+      {
+        data: {
+          dirty: false,
+          loading: false,
+          output:
+            "# Streamline Your AI Workflow with `System Prompt`\n\n**System Prompt** is a free and open-source tool designed to simplify and enhance your interaction with AI models. Move beyond endlessly retyping the same instructions. With System Prompt, you can save, manage, and chain your AI queries in a powerful visual canvas, all while keeping your data private.\n\nBeing open-source means complete transparency. You can inspect the code, contribute to its development, and be confident that your data handling is secure and local.\n\n---\n\n### **Key Features:**\n\n* **Save and Reuse Prompts:** Never type the same query twice. Save your frequently used prompts—from proofreading a text to reformulating an email with a specific tone—for instant access.\n\n* **Visualize Your Workflow in a Canvas Environment:** Map out complex AI tasks with ease. Our intuitive canvas allows you to link prompts together using nodes and branches. Generate outputs in sequence or in parallel for powerful, automated workflows.\n\n* **Your Data Stays With You:** System Prompt is fully local. No data is ever stored on our servers. You bring your own API keys, ensuring your prompts, your content, and your credentials remain entirely within your control.\n\n* **Free & Open-Source:** All features are available at no cost. Our open-source model guarantees transparency and invites community collaboration. [GitHub](https://github.com/codyadam/system-prompt)",
+          text: "# Streamline Your AI Workflow with `System Prompt`\n\n**System Prompt** is a free and open-source tool designed to simplify and enhance your interaction with AI models. Move beyond endlessly retyping the same instructions. With System Prompt, you can save, manage, and chain your AI queries in a powerful visual canvas, all while keeping your data private.\n\nBeing open-source means complete transparency. You can inspect the code, contribute to its development, and be confident that your data handling is secure and local.\n\n---\n\n### **Key Features:**\n\n* **Save and Reuse Prompts:** Never type the same query twice. Save your frequently used prompts—from proofreading a text to reformulating an email with a specific tone—for instant access.\n\n* **Visualize Your Workflow in a Canvas Environment:** Map out complex AI tasks with ease. Our intuitive canvas allows you to link prompts together using nodes and branches. Generate outputs in sequence or in parallel for powerful, automated workflows.\n\n* **Your Data Stays With You:** System Prompt is fully local. No data is ever stored on our servers. You bring your own API keys, ensuring your prompts, your content, and your credentials remain entirely within your control.\n\n* **Free & Open-Source:** All features are available at no cost. Our open-source model guarantees transparency and invites community collaboration. [GitHub](https://github.com/codyadam/system-prompt)",
+        },
+        position: {
+          x: -738.9242612798938,
+          y: 403.15530861929153,
+        },
+        height: 826,
+        width: 631,
+        type: "markdown",
+        id: "1751403232367-q5y2cgwn7",
+        measured: {
+          width: 631,
+          height: 826,
+        },
+        selected: false,
+        dragging: false,
+        resizing: false,
+      },
+      {
+        data: {
+          systemPrompt: "Make a tldr of the app for the welcome message.\n\nStart with a TLDR heading.",
+          modelId: "gemini-2.5-flash",
+          dirty: false,
+          loading: false,
+          output:
+            "**TLDR**\n\n**System Prompt helps you streamline your AI workflow.** Save, manage, and chain your AI queries on an intuitive visual canvas. It's free, open-source, and keeps your data entirely private (local).",
+        },
+        position: {
+          x: 15.416319364960117,
+          y: 366.5658160112734,
+        },
+        height: 261,
+        width: 503,
+        zIndex: 1,
+        type: "ai",
+        id: "1751403403486-yzo9zsyv8",
+        measured: {
+          width: 503,
+          height: 261,
+        },
+        selected: false,
+        dragging: false,
+        resizing: false,
+      },
+      {
+        data: {
+          loading: false,
+          dirty: false,
+          output:
+            "**TLDR**\n\n**System Prompt helps you streamline your AI workflow.** Save, manage, and chain your AI queries on an intuitive visual canvas. It's free, open-source, and keeps your data entirely private (local).",
+          text: "**TLDR**\n\n**System Prompt helps you streamline your AI workflow.** Save, manage, and chain your AI queries on an intuitive visual canvas. It's free, open-source, and keeps your data entirely private (local).",
+        },
+        position: {
+          x: 11.990470617191193,
+          y: 704.0119176665111,
+        },
+        height: 276,
+        width: 527,
+        type: "markdown",
+        id: "1751403450109-myk4kx31i",
+        measured: {
+          width: 527,
+          height: 276,
+        },
+        selected: false,
+        dragging: false,
+        resizing: false,
+      },
+    ],
+    edges: [
+      {
+        source: "1751403213284-7dr7luzzv",
+        target: "1751403232367-q5y2cgwn7",
+        id: "xy-edge__1751403213284-7dr7luzzv-1751403232367-q5y2cgwn7",
+        animated: false,
+      },
+      {
+        source: "1751403213284-7dr7luzzv",
+        target: "1751403403486-yzo9zsyv8",
+        id: "xy-edge__1751403213284-7dr7luzzv-1751403403486-yzo9zsyv8",
+        animated: false,
+      },
+      {
+        source: "1751403403486-yzo9zsyv8",
+        target: "1751403450109-myk4kx31i",
+        id: "xy-edge__1751403403486-yzo9zsyv8-1751403450109-myk4kx31i",
+        animated: false,
+      },
+    ],
+    createdAt: "2025-07-01T20:53:25.530Z",
+    updatedAt: "2025-07-01T21:14:29.810Z",
+  },
+  {
     id: "1751393359241-vmvf4f9pa",
     name: "Simple proofread",
     nodes: [
