@@ -1,12 +1,18 @@
-import { google, createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
+import { createAnthropic } from "@ai-sdk/anthropic";
 
 export const providers: Record<
   string,
   {
     models: string[];
     keyUrl: string;
-    createClient: (apiKey: string) => ReturnType<typeof createGoogleGenerativeAI> | ReturnType<typeof createOpenAI>;
+    createClient: (
+      apiKey: string
+    ) =>
+      | ReturnType<typeof createGoogleGenerativeAI>
+      | ReturnType<typeof createOpenAI>
+      | ReturnType<typeof createAnthropic>;
   }
 > = {
   "Google Generative AI": {
@@ -100,6 +106,29 @@ export const providers: Record<
         compatibility: "strict",
       });
       return openai;
+    },
+  },
+  Anthropic: {
+    keyUrl: "https://console.anthropic.com/settings/keys",
+    models: [
+      "claude-4-opus-20250514",
+      "claude-4-sonnet-20250514",
+      "claude-3-7-sonnet-20250219",
+      "claude-3-5-sonnet-latest",
+      "claude-3-5-sonnet-20241022",
+      "claude-3-5-sonnet-20240620",
+      "claude-3-5-haiku-latest",
+      "claude-3-5-haiku-20241022",
+      "claude-3-opus-latest",
+      "claude-3-opus-20240229",
+      "claude-3-sonnet-20240229",
+      "claude-3-haiku-20240307",
+    ],
+    createClient(apiKey) {
+      const anthropic = createAnthropic({
+        apiKey,
+      });
+      return anthropic;
     },
   },
 };
