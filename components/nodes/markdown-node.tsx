@@ -18,11 +18,20 @@ type MarkdownNodeData = z.infer<typeof markdownNodeDataSchema>;
 
 export const computeMarkdown: ComputeNodeFunction<MarkdownNodeData> = async (
   inputs: string[],
-  data: MarkdownNodeData
+  data: MarkdownNodeData,
+  abortSignal?: AbortSignal
 ) => {
   await new Promise((resolve) => setTimeout(resolve, 300));
+
+  // Check if operation was aborted
+  if (abortSignal?.aborted) {
+    throw new Error("Operation was aborted");
+  }
+
   return {
     ...data,
+    dirty: false,
+    error: undefined,
     output: inputs.join("\n\n"),
     text: inputs.join("\n\n"),
   };

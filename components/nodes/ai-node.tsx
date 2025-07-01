@@ -19,7 +19,7 @@ import { Handle, Position, type NodeTypes } from "@xyflow/react";
 import { generateText } from "ai";
 import { useCallback, useMemo } from "react";
 import { z } from "zod";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { ErrorNode } from "./error-node";
@@ -42,7 +42,7 @@ function formatPrompt(systemPrompt: string, inputs: { output: string; label?: st
     .join("\n\n");
 }
 
-export const computeAi: ComputeNodeFunction<AiNodeData> = async (inputs: string[], data: AiNodeData) => {
+export const computeAi: ComputeNodeFunction<AiNodeData> = async (inputs: string[], data: AiNodeData, abortSignal?: AbortSignal) => {
   if (!data.modelId) {
     return {
       ...data,
@@ -69,16 +69,21 @@ export const computeAi: ComputeNodeFunction<AiNodeData> = async (inputs: string[
 
   const client = provider.createClient(key);
 
-  console.log("Generating text", data.modelId, data.systemPrompt, inputs);
   let generatedText: string;
   try {
+    if (abortSignal?.aborted) {
+      throw new Error("Operation was aborted");
+    }
+
     const res = await generateText({
       model: client(data.modelId),
       system: data.systemPrompt,
       prompt: inputs.join("\n\n"),
+      abortSignal, // Pass abort signal to AI call
     });
     generatedText = res.text;
   } catch (error) {
+    console.error(error);
     return {
       ...data,
       error: `Error generating text: ${error instanceof Error ? error.message : JSON.stringify(error)}`,
@@ -88,6 +93,7 @@ export const computeAi: ComputeNodeFunction<AiNodeData> = async (inputs: string[
   return {
     ...data,
     error: undefined,
+    dirty: false,
     output: generatedText,
   };
 };
@@ -135,14 +141,14 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
 
   const handleSystemPromptChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      updateNodeData(props.id, { systemPrompt: e.target.value });
+      updateNodeData(props.id, { systemPrompt: e.target.value, dirty: true, error: undefined });
     },
     [props.id, updateNodeData]
   );
 
   const handleModelChange = useCallback(
     (value: string) => {
-      updateNodeData(props.id, { modelId: value });
+      updateNodeData(props.id, { modelId: value, dirty: true, error: undefined });
     },
     [props.id, updateNodeData]
   );
@@ -172,9 +178,9 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
             <DialogTrigger>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="-m-1 size-8">
+                  <div className={buttonVariants({ variant: "ghost", size: "icon", className: "-m-1 size-8" })}>
                     <RiSearchEyeLine className="size-5" />
-                  </Button>
+                  </div>
                 </TooltipTrigger>
                 <TooltipContent>Preview formatted prompt</TooltipContent>
               </Tooltip>

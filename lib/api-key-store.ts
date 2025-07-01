@@ -29,8 +29,8 @@ export const useApiKeysStore = create<ApiKeysState>()(
       },
       removeApiKey: (provider: string) =>
         set((state) => {
-          const { [provider]: removed, ...rest } = state.apiKeys
-          return { apiKeys: rest }
+          const { [provider]: _removed, ...rest } = state.apiKeys;
+          return { apiKeys: rest };
         }),
       clearAllApiKeys: () => set({ apiKeys: {} }),
     }),

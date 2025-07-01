@@ -40,7 +40,7 @@ export default function ApiKeys({ children }: { children: React.ReactNode }) {
     Object.keys(providers).forEach((providerId) => {
       setInputValues((prev) => ({ ...prev, [providerId]: apiKeys[providerId] || "" }));
     });
-  }, [open]);
+  }, [apiKeys, open]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -56,7 +56,7 @@ export default function ApiKeys({ children }: { children: React.ReactNode }) {
         <div className="space-y-4">
           <h3 className="text-sm font-medium">Available Providers</h3>
           <div className="grid gap-3">
-            {Object.entries(providers).map(([providerId, provider]) => (
+            {Object.entries(providers).map(([providerId]) => (
               <div key={providerId} className="bg-card p-3 rounded-lg flex flex-col gap-1">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">

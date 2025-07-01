@@ -6,3 +6,5 @@ export const baseNodeDataSchema = z.object({
   error: z.string().optional(),
   dirty: z.boolean().optional(),
 });
+
+export type BaseNodeData = z.infer<typeof baseNodeDataSchema>;

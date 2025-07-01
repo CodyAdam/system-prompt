@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useCanvasStore, type CanvasState } from "@/lib/canvas-store";
-import { RiAddLine, RiArrowUpBoxLine, RiDeleteBin6Line } from "@remixicon/react";
+import { RiAddLine, RiArrowUpBoxLine, RiDeleteBin6Line, RiStopLine } from "@remixicon/react";
 import { Background, Controls, Panel, ReactFlow, type NodeTypes } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useTheme } from "next-themes";
@@ -32,6 +32,8 @@ const selector = (state: CanvasState) => ({
   currentCanvasId: state.currentCanvasId,
   canvases: state.canvases,
   addNode: state.addNode,
+  abortAllOperations: state.abortAllOperations,
+  isRunning: state.getNodes().some((node) => node.data.loading),
 });
 
 export default function Canvas() {
@@ -46,8 +48,9 @@ export default function Canvas() {
     updateCanvasName,
     getCurrentCanvas,
     currentCanvasId,
-    canvases,
     addNode,
+    abortAllOperations,
+    isRunning,
   } = useCanvasStore(useShallow(selector));
 
   const currentCanvas = getCurrentCanvas();
@@ -57,22 +60,29 @@ export default function Canvas() {
     switch (type) {
       case "prompt":
         newNode = {
-          data: { prompt: "New prompt" },
-          position: { x: Math.random() * 400, y: Math.random() * 400 },
+          data: { prompt: "" },
+          position: { x: 0, y: 0 },
+          height: 200,
+          width: 500,
           type: "prompt",
         };
         break;
       case "ai":
         newNode = {
-          data: { prompt: "New prompt" },
-          position: { x: Math.random() * 400, y: Math.random() * 400 },
+          data: { systemPrompt: "" },
+          position: { x: 0, y: 0 },
+          height: 200,
+          width: 500,
+          zIndex: 1,
           type: "ai",
         };
         break;
       case "markdown":
         newNode = {
-          data: { prompt: "New prompt" },
-          position: { x: Math.random() * 400, y: Math.random() * 400 },
+          data: {},
+          position: { x: 0, y: 0 },
+          height: 600,
+          width: 600,
           type: "markdown",
         };
         break;
@@ -149,6 +159,12 @@ export default function Canvas() {
       <Controls />
       <Panel position="top-right">
         <div className="flex items-center gap-2">
+          {isRunning && (
+            <Button variant="outline" size="sm" onClick={abortAllOperations}>
+              <RiStopLine className="size-4" />
+              Stop all
+            </Button>
+          )}
           <Button variant="outline" size="sm" onClick={handleExportToClipboard}>
             <RiArrowUpBoxLine className="size-4" />
             Export to clipboard

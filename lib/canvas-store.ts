@@ -8,11 +8,11 @@ import {
   applyEdgeChanges,
   applyNodeChanges,
 } from "@xyflow/react";
+import { toast } from "sonner";
 import z from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { computeNode } from "./compute";
-import { toast } from 'sonner';
 
 // Zod schemas for validation
 const nodeSchema = z.object({
@@ -44,18 +44,19 @@ const canvasDataSchema = z.object({
 });
 
 // Canvas State Management
-interface Canvas {
+export interface Canvas {
   id: string;
   name: string;
   nodes: Node[];
   edges: Edge[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
 }
 
 export interface CanvasState {
   canvases: Canvas[];
   currentCanvasId: string | null;
+  abortController: AbortController;
 
   // Canvas management
   createCanvas: (name?: string) => string;
@@ -76,14 +77,18 @@ export interface CanvasState {
   onConnect: OnConnect;
 
   // Node/Edge management
-  updateNodeData: (nodeId: string, data: any) => void;
+  updateNodeData: (nodeId: string, data: Record<string, unknown>) => void;
   updateEdgeProps: (edgeId: string, props: Partial<Edge>) => void;
   addNode: (node: Omit<Node, "id">) => void;
   removeNode: (nodeId: string) => void;
   addEdgeToCanvas: (edge: Omit<Edge, "id">) => void;
 
+  // Abort controller helper
+  getAbortSignal: () => AbortSignal;
+
   // Node execution
-  runNode: (nodeId: string) => void;
+  runNode: (nodeId: string, firstRun?: boolean) => void;
+  abortAllOperations: () => void;
 }
 
 const generateId = () => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -127,6 +132,7 @@ const defaultEdges: Edge[] = [
 export const useCanvasStore = create<CanvasState>()(
   persist(
     (set, get) => ({
+      abortController: new AbortController(),
       canvases: [],
       currentCanvasId: null,
 
@@ -162,10 +168,29 @@ export const useCanvasStore = create<CanvasState>()(
         });
       },
 
+      getAbortSignal: () => {
+        return get().abortController.signal;
+      },
+
       switchCanvas: (id: string) => {
+        // Abort current operations
+        get().abortController.abort();
+
         const canvas = get().canvases.find((c) => c.id === id);
         if (canvas) {
-          set({ currentCanvasId: id });
+          set({
+            currentCanvasId: id,
+            abortController: new AbortController(), // Create new controller for new canvas
+            canvases: get().canvases.map((c) =>
+              c.id === id
+                ? {
+                    ...c,
+                    edges: c.edges.map((e) => ({ ...e, animated: false })),
+                    nodes: c.nodes.map((n) => ({ ...n, data: { ...n.data, loading: false } })),
+                  }
+                : c
+            ),
+          });
         }
       },
 
@@ -173,11 +198,11 @@ export const useCanvasStore = create<CanvasState>()(
         try {
           const jsonData = JSON.parse(json);
           const validationResult = canvasDataSchema.safeParse(jsonData);
-          
+
           if (!validationResult.success) {
             const errorMessage = validationResult.error.issues
-              .map(issue => `${issue.path.join('.')}: ${issue.message}`)
-              .join(', ');
+              .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
+              .join(", ");
             toast.error(`Invalid canvas format: ${errorMessage}`);
             return;
           }
@@ -272,7 +297,7 @@ export const useCanvasStore = create<CanvasState>()(
         });
       },
 
-      updateNodeData: (nodeId: string, data: any) => {
+      updateNodeData: (nodeId: string, data: Record<string, unknown>) => {
         set((state) => {
           const currentCanvas = state.getCurrentCanvas();
           if (!currentCanvas) return state;
@@ -372,15 +397,38 @@ export const useCanvasStore = create<CanvasState>()(
       },
 
       getNode: (nodeId: string) => {
-        const currentCanvas = get().getCurrentCanvas();
-        return currentCanvas?.nodes.find((node) => node.id === nodeId) || null;
+        const node =
+          get()
+            .getNodes()
+            .find((node) => node.id === nodeId) || null;
+        return node;
       },
 
-      runNode: async (nodeId: string) => {
-        const node = get()
-          .getNodes()
-          .find((node) => node.id === nodeId);
-        if (!node || !node.type) return;
+      runNode: async (nodeId: string, firstRun = false) => {
+        const node = get().getNode(nodeId);
+        if (!node || !node.type || node.data.loading) return;
+
+        const abortSignal = get().abortController.signal;
+
+        // Check if execution is aborted
+        if (abortSignal?.aborted) return;
+
+        if (firstRun) {
+          // recursively make all child dirty
+          function makeChildDirty(nodeId: string) {
+            const childEdges = get()
+              .getEdges()
+              .filter((e) => e.source === nodeId);
+            const childNodes = get()
+              .getNodes()
+              .filter((n) => childEdges.some((e) => e.target === n.id));
+            childNodes.forEach((n) => {
+              get().updateNodeData(n.id, { dirty: true });
+              makeChildDirty(n.id);
+            });
+          }
+          makeChildDirty(nodeId);
+        }
 
         const parentEdges = get()
           .getEdges()
@@ -388,24 +436,44 @@ export const useCanvasStore = create<CanvasState>()(
         parentEdges.forEach((e) => {
           get().updateEdgeProps(e.id, { animated: true });
         });
+
         const parentNodes = get()
           .getNodes()
           .filter((n) => parentEdges.some((e) => e.source === n.id));
         const inputs = [];
+
         for (const n of parentNodes) {
+          // Check if execution is aborted
+          if (abortSignal?.aborted) {
+            // Clean up animations if aborted
+            parentEdges.forEach((e) => {
+              get().updateEdgeProps(e.id, { animated: false });
+            });
+            return;
+          }
+
           const parsedData = z
             .object({
               output: z.string().optional(),
               dirty: z.boolean().optional(),
+              loading: z.boolean().optional(),
             })
             .safeParse(n.data);
 
           if (!parsedData.success || parsedData.data.dirty || !parsedData.data.output) {
             // output missing, we need to run the parent node or is dirty
             get().runNode(n.id);
-            return; 
+            return;
           }
           inputs.push(parsedData.data.output || "");
+        }
+
+        // Check if execution is aborted before starting computation
+        if (abortSignal?.aborted) {
+          parentEdges.forEach((e) => {
+            get().updateEdgeProps(e.id, { animated: false });
+          });
+          return;
         }
 
         const nodeData = node.data;
@@ -414,7 +482,53 @@ export const useCanvasStore = create<CanvasState>()(
           loading: true,
         });
 
-        const newData = await computeNode(node.type, inputs, nodeData);
+        // Create abortable timeout promise
+        const timeoutPromise = new Promise<typeof nodeData>((resolve, reject) => {
+          const timeout = setTimeout(
+            () =>
+              resolve({
+                ...nodeData,
+                error: "Node execution timed out after 500 seconds",
+              }),
+            500000
+          );
+
+          abortSignal?.addEventListener("abort", () => {
+            clearTimeout(timeout);
+            reject(new Error("Operation was aborted"));
+          });
+        });
+
+        console.log("Running node", node.type);
+
+        let newData: typeof nodeData;
+        try {
+          newData = await Promise.race([computeNode(node.type, inputs, nodeData, abortSignal), timeoutPromise]);
+        } catch (error) {
+          // Handle abort or other errors
+          parentEdges.forEach((e) => {
+            get().updateEdgeProps(e.id, { animated: false });
+          });
+
+          get().updateNodeData(nodeId, {
+            ...nodeData,
+            loading: false,
+            error: error instanceof Error ? error.message : "Unknown error",
+          });
+          return;
+        }
+
+        // Check if execution is aborted after computation
+        if (abortSignal?.aborted) {
+          parentEdges.forEach((e) => {
+            get().updateEdgeProps(e.id, { animated: false });
+          });
+          get().updateNodeData(nodeId, {
+            ...nodeData,
+            loading: false,
+          });
+          return;
+        }
 
         parentEdges.forEach((e) => {
           get().updateEdgeProps(e.id, { animated: false });
@@ -430,6 +544,9 @@ export const useCanvasStore = create<CanvasState>()(
           return;
         }
 
+        // Check if execution is aborted before running connected nodes
+        if (abortSignal?.aborted) return;
+
         // get all edges that are connected to the node
         const connectedEdges = get()
           .getEdges()
@@ -443,9 +560,33 @@ export const useCanvasStore = create<CanvasState>()(
           get().runNode(n.id);
         });
       },
+
+      abortAllOperations: () => {
+        // Abort current operations
+        get().abortController.abort();
+
+        // Create new controller and reset all loading states
+        set((state) => ({
+          abortController: new AbortController(),
+          canvases: state.canvases.map((canvas) => ({
+            ...canvas,
+            edges: canvas.edges.map((edge) => ({ ...edge, animated: false })),
+            nodes: canvas.nodes.map((node) => ({ ...node, data: { ...node.data, loading: false } })),
+          })),
+        }));
+      },
     }),
     {
       name: "canvas-storage",
+      partialize: (state) => ({
+        canvases: state.canvases,
+        currentCanvasId: state.currentCanvasId,
+      }),
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state.abortController = new AbortController();
+        }
+      },
     }
   )
 );

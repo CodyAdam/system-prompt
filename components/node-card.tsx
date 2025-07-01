@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { BaseNodeData } from '@/lib/base-node';
 import { useCanvasStore } from "@/lib/canvas-store";
 import { cn } from "@/lib/utils";
 import { RiCloseLine, RiErrorWarningFill, RiExpandDiagonalS2Line, RiLoader5Line, RiPlayLine } from "@remixicon/react";
-import { NodeProps, NodeResizeControl } from "@xyflow/react";
+import { Node, NodeProps, NodeResizeControl } from "@xyflow/react";
 import { useCallback, useMemo } from "react";
 import { z } from "zod";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
@@ -18,10 +19,7 @@ export function NodeCard({
   title: string | React.ReactNode;
   isError?: boolean;
   buttons?: React.ReactNode;
-  node: NodeProps & {
-    data: any;
-    type: any;
-  };
+  node: NodeProps<Node<BaseNodeData>>;
 }) {
   const removeNode = useCanvasStore((state) => state.removeNode);
   const runNode = useCanvasStore((state) => state.runNode);
@@ -36,7 +34,7 @@ export function NodeCard({
   }, [node.id, removeNode]);
 
   const handleRun = useCallback(() => {
-    runNode(node.id);
+    runNode(node.id, true);
   }, [node.id, runNode]);
 
   return (
@@ -63,6 +61,7 @@ export function NodeCard({
         >
           {title}
         </div>
+        {node.data?.dirty && <div className="size-1.5 -ml-1 bg-foreground/40 rounded-full"></div>}
         <div className="ml-auto"></div>
         {error && (
           <TooltipProvider>
@@ -72,7 +71,7 @@ export function NodeCard({
                   <RiErrorWarningFill className="size-5 text-red-500" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent className='whitespace-pre-wrap max-w-lg'>{error}</TooltipContent>
+              <TooltipContent className="whitespace-pre-wrap max-w-lg">{error}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         )}
