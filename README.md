@@ -1,40 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/create-next-app).
+# **Streamline AI Workflow with System Prompt**
 
-## Getting Started
+**System Prompt** is a free, locally-run tool designed to simplify and enhance your interaction with AI models. Move beyond endlessly retyping the same instructions. With System Prompt, you can save, manage, and chain your AI queries in a powerful visual canvas.
 
-First, run the development server:
+## **Key Features:**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Save and Reuse Prompts:**
+  Never type the same query twice. Save your frequently used prompts for instant access, whether you're proofreading a text or reformulating an email with a specific tone.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Create Powerful System Prompts:**
+  Establish a consistent context for your AI conversations. Set up "system prompts" that define the AI's role and tone from the outset, ensuring you get the desired output every time.
 
-You can start editing the page by modifying `app/route.ts`. The page auto-updates as you edit the file.
+- **Visualize Your Workflow in a Canvas Environment:**
+  Map out complex AI tasks with ease. Our intuitive canvas allows you to link prompts together using nodes and branches. Generate a blog post, then instantly create a Tweet, a LinkedIn update, and a Discord message in a seamless, visual workflow, either in sequence or in parallel.
 
-## Learn More
+- **Your Data Stays With You:**
+  System Prompt is fully local. No data is stored on our servers, and you bring your own API keys. Your prompts, your content, and your keys remain entirely within your control.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## API Routes
-
-This directory contains example API routes for the headless API app.
-
-For more details, see [route.js file convention](https://nextjs.org/docs/app/api-reference/file-conventions/route).
+- **Completely Free:**
+  All features are available at no cost.

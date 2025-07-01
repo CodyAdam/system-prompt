@@ -1,0 +1,21 @@
+"use client";
+
+import { SidebarProvider } from "@/components/ui/sidebar";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import { AppSidebar } from "../components/app-sidebar";
+
+const Canvas = dynamic(() => import("../components/canvas"), { ssr: false });
+
+export default function Home() {
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="w-full h-screen relative">
+        <Suspense fallback={<div>Loading...</div>}>
+          <Canvas />
+        </Suspense>
+      </main>
+    </SidebarProvider>
+  );
+}
