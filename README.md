@@ -1,20 +1,59 @@
-# **Streamline AI Workflow with System Prompt**
+<div align="center">
 
-**System Prompt** is a free, locally-run tool designed to simplify and enhance your interaction with AI models. Move beyond endlessly retyping the same instructions. With System Prompt, you can save, manage, and chain your AI queries in a powerful visual canvas.
+# System Prompt
+### Make your AI workflows reusable and efficient
 
-## **Key Features:**
+![System Prompt](./app/opengraph-image.png)
 
-- **Save and Reuse Prompts:**
-  Never type the same query twice. Save your frequently used prompts for instant access, whether you're proofreading a text or reformulating an email with a specific tone.
+[![Try it now](https://img.shields.io/badge/Try%20it%20now-systemprompt.app-blue?style=for-the-badge)](https://systemprompt.app)
 
-- **Create Powerful System Prompts:**
-  Establish a consistent context for your AI conversations. Set up "system prompts" that define the AI's role and tone from the outset, ensuring you get the desired output every time.
+</div>
 
-- **Visualize Your Workflow in a Canvas Environment:**
-  Map out complex AI tasks with ease. Our intuitive canvas allows you to link prompts together using nodes and branches. Generate a blog post, then instantly create a Tweet, a LinkedIn update, and a Discord message in a seamless, visual workflow, either in sequence or in parallel.
+## 🚀 What is System Prompt?
 
-- **Your Data Stays With You:**
-  System Prompt is fully local. No data is stored on our servers, and you bring your own API keys. Your prompts, your content, and your keys remain entirely within your control.
+**System Prompt** is a free, open-source, locally-run tool that transforms how you interact with AI models. Stop repeating yourself and start building reusable AI workflows with our intuitive visual canvas.
 
-- **Completely Free:**
-  All features are available at no cost.
+## ✨ Key Features
+
+- **🔄 Reusable Templates**: Save your AI instructions once, use them forever
+- **🎨 Visual Canvas**: Build complex AI workflows with drag-and-drop simplicity  
+- **🔗 Chain Operations**: Connect multiple AI models and create powerful pipelines
+- **🔑 Bring Your Own API**: Use any AI model with your own API keys
+- **💻 Local & Private**: Runs entirely in your browser - your data stays with you
+- **🆓 Completely Free**: Open-source and always will be
+
+## 💡 Use Cases
+
+**Email Management**
+- Create email response templates with specific tone and style
+- Just change the input email, get consistent professional responses
+
+**Content Creation**
+- Design once, deploy everywhere: Create social media posts for Twitter, LinkedIn, and Instagram from a single input
+- Maintain brand voice across all platforms
+
+**Data Processing**
+- Build multi-step analysis workflows
+- Chain data cleaning, analysis, and reporting operations
+
+*and many more... check out the [demo examples](https://systemprompt.app)*
+
+## 🛠️ How It Works
+
+1. **Create Nodes**: Add AI model nodes to your canvas
+2. **Define Instructions**: Set up your system prompts and parameters
+3. **Connect & Chain**: Link nodes to create complex workflows
+4. **Save & Reuse**: Your templates are ready for any future use
+
+## 🚀 Get Started
+
+Try it now at **[systemprompt.app](https://systemprompt.app)** - no installation required!
+
+## 📚 Credits
+
+- **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions
+- **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows
+
+## 📄 License
+
+Open source MIT and free to use. See LICENSE for details.
