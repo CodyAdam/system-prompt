@@ -73,8 +73,9 @@ export default function Canvas() {
       deleteKeyCode={["Backspace", "Delete"]}
       minZoom={0.2}
       fitViewOptions={{
-        padding: 0.4,
+        padding: 0.1,
         maxZoom: 1,
+        minZoom: 0.3,
       }}
       proOptions={{ hideAttribution: true }}
     >
