@@ -16,7 +16,7 @@ import { useState } from "react";
 export default function ImportDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [jsonInput, setJsonInput] = useState("");
-  const { importFromJson } = useCanvasStore();
+  const importFromJson = useCanvasStore((state) => state.importFromJson);
 
   const handleImport = () => {
     importFromJson(jsonInput.trim());
@@ -40,7 +40,7 @@ export default function ImportDialog({ children }: { children: React.ReactNode }
             placeholder="Paste your canvas JSON here..."
             value={jsonInput}
             onChange={(e) => setJsonInput(e.target.value)}
-            className="h-[300px] font-mono text-sm overflow-y-auto"
+            className="h-[300px] break-all font-mono text-sm overflow-y-auto"
           />
           
           <div className="flex justify-end gap-2">

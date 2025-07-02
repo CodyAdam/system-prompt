@@ -8,18 +8,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { providers } from "@/lib/ai";
 import { useApiKeysStore } from "@/lib/api-key-store";
 import { baseNodeDataSchema } from "@/lib/base-node";
 import { useCanvasStore } from "@/lib/canvas-store";
-import { ComputeNodeFunction } from "@/lib/compute";
+import { ComputeNodeFunction, ComputeNodeInput, formatInputs } from "@/lib/compute";
 import { RiSearchEyeLine } from "@remixicon/react";
 import { Handle, Position, type NodeTypes } from "@xyflow/react";
 import { generateText } from "ai";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { z } from "zod";
-import { Button, buttonVariants } from "../ui/button";
+import { DebouncedTextarea } from "../debounced-textarea";
+import { buttonVariants } from "../ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { ErrorNode } from "./error-node";
@@ -31,18 +31,11 @@ export const aiNodeDataSchema = baseNodeDataSchema.extend({
 
 type AiNodeData = z.infer<typeof aiNodeDataSchema>;
 
-function formatPrompt(systemPrompt: string, inputs: { output: string; label?: string }[]) {
-  return inputs
-    .map((input) => {
-      if (input.label) {
-        return `<${input.label}>\n${input.output.trim()}\n</${input.label}>`;
-      }
-      return input.output;
-    })
-    .join("\n\n");
-}
-
-export const computeAi: ComputeNodeFunction<AiNodeData> = async (inputs: string[], data: AiNodeData, abortSignal?: AbortSignal) => {
+export const computeAi: ComputeNodeFunction<AiNodeData> = async (
+  inputs: ComputeNodeInput[],
+  data: AiNodeData,
+  abortSignal?: AbortSignal
+) => {
   if (!data.modelId) {
     return {
       ...data,
@@ -78,7 +71,7 @@ export const computeAi: ComputeNodeFunction<AiNodeData> = async (inputs: string[
     const res = await generateText({
       model: client(data.modelId),
       system: data.systemPrompt,
-      prompt: inputs.join("\n\n"),
+      prompt: formatInputs(inputs),
       abortSignal, // Pass abort signal to AI call
     });
     generatedText = res.text;
@@ -103,13 +96,16 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
     return aiNodeDataSchema.safeParse(props.data);
   }, [props.data]);
   const updateNodeData = useCanvasStore((state) => state.updateNodeData);
+  const [open, setOpen] = useState(false);
   const formatedPrompt = useCanvasStore((state) => {
+    if (!open) {
+      return null;
+    }
     const rawNode = state.getNode(props.id);
     const validatedNode = aiNodeDataSchema.safeParse(rawNode?.data);
     if (!validatedNode.success) {
       return null;
     }
-    const node = validatedNode.data;
     const parentEdges = state.getEdges().filter((edge) => edge.target === props.id);
     if (parentEdges.length === 0) {
       return null;
@@ -130,8 +126,7 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
       })
       .filter((node): node is NonNullable<typeof node> => node !== null);
 
-    return formatPrompt(
-      node.systemPrompt,
+    return formatInputs(
       parentNodes.map((node) => ({
         output: node.output,
         label: node.label,
@@ -174,7 +169,7 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
       node={props}
       buttons={
         <TooltipProvider>
-          <Dialog>
+          <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -193,13 +188,13 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
                 </DialogDescription>
               </DialogHeader>
               <div className="flex flex-col text-sm">
-                <div className="p-3 bg-muted rounded-md rounded-b-none border-b-2 border-dashed border-card whitespace-pre-wrap flex flex-col gap-1">
+                <div className="p-3 bg-card rounded-md rounded-b-none border-b-2 border-dashed border-muted whitespace-pre-wrap flex flex-col gap-1">
                   <span className="text-xs text-muted-foreground">System prompt</span>
-                  <p>{parsedData.data.systemPrompt}</p>
+                  <p className=" break-all">{parsedData.data.systemPrompt}</p>
                 </div>
-                <div className="p-3 bg-muted rounded-md rounded-t-none whitespace-pre-wrap flex flex-col gap-1">
+                <div className="p-3 bg-card rounded-md rounded-t-none whitespace-pre-wrap flex flex-col gap-1">
                   <span className="text-xs text-muted-foreground">User prompt</span>
-                  <p>{formatedPrompt}</p>
+                  <p className="break-all">{formatedPrompt}</p>
                 </div>
               </div>
             </DialogContent>
@@ -229,7 +224,7 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
           </Select>
         </div>
         {provider && !key && <p className="text-xs text-destructive">API key is not configured for {provider}</p>}
-        <Textarea
+        <DebouncedTextarea
           name="systemPrompt"
           value={parsedData.data.systemPrompt}
           onChange={handleSystemPromptChange}

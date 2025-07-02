@@ -13,45 +13,80 @@ import {
   SidebarMenuItem,
   SidebarMenuSkeleton,
 } from "@/components/ui/sidebar";
-import { RiAddLine, RiComputerLine, RiGithubLine, RiKeyLine, RiMoonLine, RiSunLine, RiArtboard2Line, RiArrowDownBoxLine } from "@remixicon/react";
+import { useCanvasStore } from "@/lib/canvas-store";
+import {
+  RiAddLine,
+  RiArrowDownBoxLine,
+  RiArtboard2Line,
+  RiComputerLine,
+  RiGithubLine,
+  RiKeyLine,
+  RiMoonLine,
+  RiSunLine,
+} from "@remixicon/react";
 import { useTheme } from "next-themes";
-import ApiKeys from "./api-keys";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useCanvasStore, type CanvasState } from "@/lib/canvas-store";
-import { useShallow } from 'zustand/react/shallow';
-import ImportDialog from './import-dialog';
-
-const canvasSelector = (state: CanvasState) => ({
-  canvases: state.canvases,
-  currentCanvasId: state.currentCanvasId,
-  createCanvas: state.createCanvas,
-  switchCanvas: state.switchCanvas,
-});
+import { useEffect, useMemo, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
+import ApiKeys from "./api-keys";
+import ImportDialog from "./import-dialog";
+import Logo from "./logo";
 
 export function AppSidebar() {
   const { setTheme, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  
-  const {
-    canvases,
-    currentCanvasId,
-    createCanvas,
-    switchCanvas,
-  } = useCanvasStore(useShallow(canvasSelector));
+
+  const { createCanvas, switchCanvas, currentCanvasId } = useCanvasStore(
+    useShallow((state) => ({
+      createCanvas: state.createCanvas,
+      switchCanvas: state.switchCanvas,
+      currentCanvasId: state.currentCanvasId,
+    }))
+  );
+
+  const serializedCanvases = useCanvasStore(
+    useShallow((state) => {
+      const canvases = state.canvases.map((canvas) => ({
+        name: canvas.name,
+        id: canvas.id,
+        createdAt: new Date(canvas.createdAt).toISOString(),
+      }));
+      return canvases
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .map((canvas) => `${canvas.name}:${canvas.id}`);
+    })
+  );
+
+  const canvases = useMemo(() => {
+    return serializedCanvases.map((canvas) => {
+      const lastDashIndex = canvas.lastIndexOf(":");
+      const name = canvas.substring(0, lastDashIndex);
+      const id = canvas.substring(lastDashIndex + 1);
+      return {
+        name,
+        id,
+      };
+    });
+  }, [serializedCanvases]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-
   return (
     <Sidebar>
       <SidebarHeader>
-        <span className="text-xl px-2 font-mono font-semibold">System Prompt</span>
+        <div className="px-2 flex items-center gap-2">
+          <Logo className="size-18" />
+          <span className="text-2xl tracking-tighter font-sans leading-none font-medium">
+            System
+            <br />
+            Prompt
+          </span>
+        </div>
       </SidebarHeader>
       <SidebarContent>
-      <SidebarGroup>
+        <SidebarGroup>
           <SidebarGroupLabel>New</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -63,10 +98,10 @@ export function AppSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <ImportDialog>
-                <SidebarMenuButton>
-                  <RiArrowDownBoxLine className="size-4 shrink-0" />
-                  Import
-                </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <RiArrowDownBoxLine className="size-4 shrink-0" />
+                    Import
+                  </SidebarMenuButton>
                 </ImportDialog>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -76,12 +111,9 @@ export function AppSidebar() {
           <SidebarGroupLabel>Canvas</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {canvases.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map((canvas) => (
+              {canvases.map((canvas) => (
                 <SidebarMenuItem key={canvas.id}>
-                  <SidebarMenuButton 
-                    onClick={() => switchCanvas(canvas.id)}
-                    isActive={canvas.id === currentCanvasId}
-                  >
+                  <SidebarMenuButton onClick={() => switchCanvas(canvas.id)} isActive={canvas.id === currentCanvasId}>
                     <RiArtboard2Line className="size-4 shrink-0" />
                     <span className="truncate">{canvas.name}</span>
                   </SidebarMenuButton>
@@ -111,7 +143,10 @@ export function AppSidebar() {
           </SidebarMenuItem>
           <SidebarMenuItem>
             {mounted ? (
-              <SidebarMenuButton onClick={() => setTheme(theme === "dark" ? "light" : theme === "light" ? "system" : "dark")} suppressHydrationWarning>
+              <SidebarMenuButton
+                onClick={() => setTheme(theme === "dark" ? "light" : theme === "light" ? "system" : "dark")}
+                suppressHydrationWarning
+              >
                 {theme === "dark" ? (
                   <RiSunLine className="size-4 shrink-0" suppressHydrationWarning />
                 ) : theme === "light" ? (

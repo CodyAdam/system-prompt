@@ -2,12 +2,13 @@ import { NodeCard } from "@/components/node-card";
 import { Textarea } from "@/components/ui/textarea";
 import { baseNodeDataSchema } from "@/lib/base-node";
 import { useCanvasStore } from "@/lib/canvas-store";
-import { ComputeNodeFunction } from "@/lib/compute";
+import { ComputeNodeFunction, ComputeNodeInput, formatInputs } from "@/lib/compute";
 import { Handle, Position, type NodeTypes } from "@xyflow/react";
 import { useCallback, useMemo } from "react";
 import { z } from "zod";
 import { Input } from "../ui/input";
 import { ErrorNode } from "./error-node";
+import { DebouncedTextarea } from '../debounced-textarea';
 
 export const promptNodeDataSchema = baseNodeDataSchema.extend({
   prompt: z.string(),
@@ -17,13 +18,13 @@ export const promptNodeDataSchema = baseNodeDataSchema.extend({
 type PromptNodeData = z.infer<typeof promptNodeDataSchema>;
 
 export const computePrompt: ComputeNodeFunction<PromptNodeData> = async (
-  inputs: string[],
+  inputs: ComputeNodeInput[],
   data: PromptNodeData,
   abortSignal?: AbortSignal
 ) => {
   const currentData = { ...data };
   if (inputs.length > 0) {
-    currentData.prompt = inputs.join("\n\n");
+    currentData.prompt = formatInputs(inputs);
   }
 
   await new Promise((resolve) => setTimeout(resolve, 300));
@@ -85,7 +86,7 @@ export const PromptNode: NodeTypes[keyof NodeTypes] = (props) => {
       }
       node={props}
     >
-      <Textarea
+      <DebouncedTextarea
         name="prompt"
         value={parsedData.data.prompt}
         onChange={handlePromptChange}

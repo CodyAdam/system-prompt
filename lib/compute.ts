@@ -2,11 +2,25 @@ import { aiNodeDataSchema, computeAi } from "@/components/nodes/ai-node";
 import { computeMarkdown } from "@/components/nodes/markdown-node";
 import { computePrompt, promptNodeDataSchema } from "@/components/nodes/prompt-node";
 
-export type ComputeNodeFunction<T> = (inputs: string[], data: T, abortSignal?: AbortSignal) => Promise<T>;
+export type ComputeNodeFunction<T> = (inputs: ComputeNodeInput[], data: T, abortSignal?: AbortSignal) => Promise<T>;
+
+export type ComputeNodeInput = { output: string; label?: string };
+
+export function formatInputs(inputs: ComputeNodeInput[]) {
+  return inputs
+    .map((input) => {
+      if (input.label) {
+        const label = input.label.toLowerCase().replace(/ /g, "_");
+        return `<${label}>\n${input.output.trim()}\n</${label}>`; 
+      }
+      return input.output;
+    })
+    .join("\n\n");
+}
 
 export const computeNode = async (
   type: string,
-  inputs: string[],
+  inputs: ComputeNodeInput[],
   data: Record<string, unknown>,
   abortSignal?: AbortSignal
 ): Promise<Record<string, unknown>> => {

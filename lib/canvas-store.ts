@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import z from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { computeNode } from "./compute";
+import { computeNode, ComputeNodeInput } from "./compute";
 
 // Zod schemas for validation
 const nodeSchema = z.object({
@@ -331,7 +331,7 @@ export const useCanvasStore = create<CanvasState>()(
 
       addNode: (nodeData) => {
         const id = generateId();
-        const newNode: Node = { ...nodeData, id };
+        const newNode: Node = { ...nodeData, id, selected: true };
 
         set((state) => {
           const currentCanvas = state.getCurrentCanvas();
@@ -342,7 +342,7 @@ export const useCanvasStore = create<CanvasState>()(
               canvas.id === currentCanvas.id
                 ? {
                     ...canvas,
-                    nodes: [...canvas.nodes, newNode],
+                    nodes: [...canvas.nodes.map((node) => ({ ...node, selected: false })), newNode],
                     updatedAt: new Date(),
                   }
                 : canvas
@@ -439,8 +439,9 @@ export const useCanvasStore = create<CanvasState>()(
 
         const parentNodes = get()
           .getNodes()
-          .filter((n) => parentEdges.some((e) => e.source === n.id));
-        const inputs = [];
+          .filter((n) => parentEdges.some((e) => e.source === n.id))
+          .sort((a, b) => a.position.x - b.position.x);
+        const inputs: ComputeNodeInput[] = [];
 
         for (const n of parentNodes) {
           // Check if execution is aborted
@@ -457,15 +458,19 @@ export const useCanvasStore = create<CanvasState>()(
               output: z.string().optional(),
               dirty: z.boolean().optional(),
               loading: z.boolean().optional(),
+              label: z.string().optional(),
             })
             .safeParse(n.data);
 
-          if (!parsedData.success || parsedData.data.dirty || !parsedData.data.output) {
+          if (!parsedData.success || parsedData.data.dirty || parsedData.data.output === undefined) {
             // output missing, we need to run the parent node or is dirty
             get().runNode(n.id);
             return;
           }
-          inputs.push(parsedData.data.output || "");
+          inputs.push({
+            output: parsedData.data.output,
+            label: parsedData.data.label,
+          });
         }
 
         // Check if execution is aborted before starting computation

@@ -1,15 +1,15 @@
 import { NodeCard } from "@/components/node-card";
 import { Button } from "@/components/ui/button";
 import { baseNodeDataSchema } from "@/lib/base-node";
-import { ComputeNodeFunction } from "@/lib/compute";
+import { ComputeNodeFunction, ComputeNodeInput, formatInputs } from "@/lib/compute";
 import { RiArrowRightUpLine, RiCheckboxMultipleBlankLine, RiCheckboxMultipleFill, RiCodeLine } from "@remixicon/react";
 import { Handle, Position, type NodeTypes } from "@xyflow/react";
+import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { z } from "zod";
 import { ErrorNode } from "./error-node";
-import Link from "next/link";
 
 const markdownNodeDataSchema = baseNodeDataSchema.extend({
   text: z.string().optional(),
@@ -18,7 +18,7 @@ const markdownNodeDataSchema = baseNodeDataSchema.extend({
 type MarkdownNodeData = z.infer<typeof markdownNodeDataSchema>;
 
 export const computeMarkdown: ComputeNodeFunction<MarkdownNodeData> = async (
-  inputs: string[],
+  inputs: ComputeNodeInput[],
   data: MarkdownNodeData,
   abortSignal?: AbortSignal
 ) => {
@@ -33,8 +33,8 @@ export const computeMarkdown: ComputeNodeFunction<MarkdownNodeData> = async (
     ...data,
     dirty: false,
     error: undefined,
-    output: inputs.join("\n\n"),
-    text: inputs.join("\n\n"),
+    output: formatInputs(inputs),
+    text: formatInputs(inputs),
   };
 };
 
@@ -57,6 +57,18 @@ export const MarkdownNode: NodeTypes[keyof NodeTypes] = (props) => {
 
   if (!parsedData.success) {
     return <ErrorNode title="Invalid Markdown Node Data" description={parsedData.error.message} node={props} />;
+  }
+
+  function parseMarkdown(md: string) {
+    // replace all xml like "<this_is_xml>" to "\n`<this_is_xml>`\n"
+    // replace all xml like "</this_is_xml>" to "\n`</this_is_xml>`\n"
+    return md
+      .replaceAll(/<([^>\/]+)>/g, (match, p1) => {
+        return `\n*\`<${p1}>\`*\n`;
+      })
+      .replaceAll(/<\/([^>]+)>/g, (match, p1) => {
+        return `\n*\`</${p1}>\`*\n`;
+      });
   }
 
   return (
@@ -93,11 +105,9 @@ export const MarkdownNode: NodeTypes[keyof NodeTypes] = (props) => {
     >
       <div className="h-full overflow-auto p-6 nowheel nopan cursor-auto select-text nodrag">
         {showRaw ? (
-          <pre className="font-mono text-sm h-full overflow-auto whitespace-pre-wrap ">
-            {parsedData.data.text}
-          </pre>
+          <pre className="font-mono text-sm h-full overflow-auto whitespace-pre-wrap ">{parsedData.data.text}</pre>
         ) : (
-          <div className="prose prose-sm mx-auto prose-neutral dark:prose-invert prose-h1:font-display prose-h1:font-bold prose-h2:font-display prose-h2:font-bold prose-h3:font-display prose-h3:font-bold prose-strong:font-semibold prose-em:text-foreground prose-strong:text-foreground prose-code:before:content-none prose-code:bg-muted prose-code:after:content-none prose-ol:ml-0 prose-ol:list-outside prose-ol:list-decimal prose-ul:list-outside prose-ul:list-disc prose-thead:text-left break-words">
+          <div className="prose prose-sm mx-auto prose-neutral dark:prose-invert prose-h1:font-display prose-h1:font-bold prose-h2:font-display prose-h2:font-bold prose-h3:font-display prose-h3:font-bold prose-strong:font-semibold prose-em:text-foreground prose-strong:text-foreground prose-code:before:content-none prose-code:after:content-none prose-ol:ml-0 prose-ol:list-outside prose-ol:list-decimal prose-ul:list-outside prose-ul:list-disc prose-thead:text-left break-words">
             {parsedData.data.text ? (
               <Markdown
                 remarkPlugins={[remarkGfm]}
@@ -118,11 +128,11 @@ export const MarkdownNode: NodeTypes[keyof NodeTypes] = (props) => {
                     return <code className="bg-muted rounded-md px-1">{children}</code>;
                   },
                   pre: ({ children }) => {
-                    return <pre className="w-full overflow-x-auto rounded-md p-2">{children}</pre>;
+                    return <pre className="w-full overflow-x-auto [&>code]:!bg-transparent rounded-md p-2">{children}</pre>;
                   },
                 }}
               >
-                {parsedData.data.text}
+                {parseMarkdown(parsedData.data.text)}
               </Markdown>
             ) : (
               <span className="text-muted-foreground text-sm">No text</span>

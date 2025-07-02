@@ -173,6 +173,9 @@ importers:
       zustand:
         specifier: ^5.0.6
         version: 5.0.6(@types/react@19.1.8)(immer@10.1.1)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
+      zustand-debounce:
+        specifier: ^2.2.0
+        version: 2.2.0(zustand@5.0.6(@types/react@19.1.8)(immer@10.1.1)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0)))
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
@@ -3367,6 +3370,11 @@ packages:
 
   zod@3.25.67:
     resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
+
+  zustand-debounce@2.2.0:
+    resolution: {integrity: sha512-6r6ZHwYqZVlxiyBr6nqcy3DLOmbc84Sxe3Sk8SzV8VYvM5ck+Lhbebehz/gsULRZlGCEGsANksqhnB8O6rWrzQ==}
+    peerDependencies:
+      zustand: '>=4.0.0'
 
   zustand@4.5.7:
     resolution: {integrity: sha512-CHOUy7mu3lbD6o6LJLfllpjkzhHXSBlX8B9+qPddUsIfeF5S/UZ5q0kmCsnRqT1UHFQZchNFDDzMbQsuesHWlw==}
@@ -7095,6 +7103,10 @@ snapshots:
       zod: 3.25.67
 
   zod@3.25.67: {}
+
+  zustand-debounce@2.2.0(zustand@5.0.6(@types/react@19.1.8)(immer@10.1.1)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))):
+    dependencies:
+      zustand: 5.0.6(@types/react@19.1.8)(immer@10.1.1)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
 
   zustand@4.5.7(@types/react@19.1.8)(immer@10.1.1)(react@19.1.0):
     dependencies:
