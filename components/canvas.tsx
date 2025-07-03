@@ -6,10 +6,12 @@ import "@xyflow/react/dist/style.css";
 import { useTheme } from "next-themes";
 import { useShallow } from "zustand/react/shallow";
 import { CanvasPanels } from "./canvas-panels";
+import Logo from "./logo";
 import { AiNode } from "./nodes/ai-node";
 import { AnnotationNode } from "./nodes/annotation-node";
 import { MarkdownNode } from "./nodes/markdown-node";
 import { PromptNode } from "./nodes/prompt-node";
+import { SidebarTrigger } from "./ui/sidebar";
 
 const panOnDrag = [1, 2];
 
@@ -46,8 +48,10 @@ export default function Canvas() {
   if (!currentCanvasId) {
     return (
       <div className="w-full h-full flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-muted-foreground mb-4">No canvas selected</p>
+        <SidebarTrigger className="absolute top-4 left-4" />
+        <div className="text-center flex flex-col items-center gap-2">
+          <Logo className="size-40" />
+          <p className="text-foreground font-semibold text-2xl tracking-tight">No canvas selected</p>
           <p className="text-sm text-muted-foreground">Create a canvas from the sidebar to get started</p>
         </div>
       </div>

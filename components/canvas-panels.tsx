@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useCanvasStore, type CanvasState } from "@/lib/canvas-store";
-import { RiAddLine, RiArrowUpBoxLine, RiDeleteBin2Line, RiStopLine } from "@remixicon/react";
+import { getCleanedCanvas, useCanvasStore, type CanvasState } from "@/lib/canvas-store";
+import { RiAiGenerate2, RiArrowUpBoxLine, RiChatQuoteLine, RiDeleteBin2Line, RiMarkdownLine, RiStopLine, RiTextSnippet } from "@remixicon/react";
 import { Panel, useReactFlow } from "@xyflow/react";
 import Link from "next/link";
 import { memo, useCallback } from "react";
@@ -20,7 +20,6 @@ const TopLeftPanel = memo(function TopLeftPanel() {
     }))
   );
 
-
   const handleCanvasNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (currentCanvasId) {
@@ -30,7 +29,7 @@ const TopLeftPanel = memo(function TopLeftPanel() {
     [currentCanvasId, updateCanvasName]
   );
 
-  if (currentName === undefined ) return null;
+  if (currentName === undefined) return null;
 
   return (
     <Panel position="top-left">
@@ -67,7 +66,7 @@ const TopRightPanel = memo(function TopRightPanel() {
   const handleExportToClipboard = useCallback(() => {
     const canvas = getCurrentCanvas();
     if (canvas) {
-      navigator.clipboard.writeText(JSON.stringify(canvas, null, 2));
+      navigator.clipboard.writeText(JSON.stringify(getCleanedCanvas(canvas), null, 2));
       toast.success("Canvas copied to clipboard");
     }
   }, [getCurrentCanvas]);
@@ -83,7 +82,7 @@ const TopRightPanel = memo(function TopRightPanel() {
         )}
         <Button variant="outline" size="sm" onClick={handleExportToClipboard}>
           <RiArrowUpBoxLine className="size-4" />
-          Export to clipboard
+          <span className="hidden sm:block">Export to clipboard</span>
         </Button>
         <Button
           variant="outline"
@@ -92,7 +91,7 @@ const TopRightPanel = memo(function TopRightPanel() {
           className="text-destructive hover:text-destructive"
         >
           <RiDeleteBin2Line className="size-4" />
-          Delete Canvas
+          <span className="hidden sm:block">Delete Canvas</span>
         </Button>
       </div>
     </Panel>
@@ -141,8 +140,8 @@ const BottomCenterPanel = memo(function BottomCenterPanel() {
           addNode({
             data: { text: "" },
             position,
-            height: 500,
-            width: 450,
+            height: 150,
+            width: 400,
             type: type,
           });
           break;
@@ -155,20 +154,20 @@ const BottomCenterPanel = memo(function BottomCenterPanel() {
     <Panel position="bottom-center">
       <div className="flex items-center gap-2">
         <Button variant="outline" onClick={() => handleAddNode("prompt")}>
-          <RiAddLine className="size-4 shrink-0" />
-          Prompt
+          <RiTextSnippet className="size-5 shrink-0" />
+          <span className="hidden sm:block">Prompt</span>
         </Button>
         <Button variant="outline" onClick={() => handleAddNode("ai")}>
-          <RiAddLine className="size-4 shrink-0" />
-          AI
+          <RiAiGenerate2 className="size-5 shrink-0" />
+          <span className="hidden sm:block">AI</span>
         </Button>
         <Button variant="outline" onClick={() => handleAddNode("markdown")}>
-          <RiAddLine className="size-4 shrink-0" />
-          Markdown
+          <RiMarkdownLine className="size-5 shrink-0" />
+          <span className="hidden sm:block">Markdown</span>
         </Button>
         <Button variant="outline" onClick={() => handleAddNode("annotation")}>
-          <RiAddLine className="size-4 shrink-0" />
-          Annotation
+          <RiChatQuoteLine className="size-5 shrink-0" />
+          <span className="hidden sm:block">Annotation</span>
         </Button>
       </div>
     </Panel>

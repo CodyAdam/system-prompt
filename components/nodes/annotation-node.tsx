@@ -72,7 +72,7 @@ export const AnnotationNode: NodeTypes[keyof NodeTypes] = (props) => {
         value={parsedData.data.text}
         onChange={handleTextChange}
         placeholder="Type something..."
-        className="nodrag nowheel dark:bg-transparent nopan font-handwriting shadow-none h-full w-full resize-none rounded-xl border-none bg-transparent !ring-0 text-muted-foreground !text-2xl"
+        className="nodrag nowheel min-h-0 dark:bg-transparent nopan font-handwriting shadow-none h-full w-full resize-none rounded-xl border-none bg-transparent !ring-0 text-muted-foreground !text-2xl"
       />
 
       {props.selected && (

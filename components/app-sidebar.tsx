@@ -111,14 +111,25 @@ export function AppSidebar() {
           <SidebarGroupLabel>Canvas</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {canvases.map((canvas) => (
-                <SidebarMenuItem key={canvas.id}>
-                  <SidebarMenuButton onClick={() => switchCanvas(canvas.id)} isActive={canvas.id === currentCanvasId}>
-                    <RiArtboard2Line className="size-4 shrink-0" />
-                    <span className="truncate">{canvas.name}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {mounted ? (
+                canvases.map((canvas) => (
+                  <SidebarMenuItem key={canvas.id}>
+                    <SidebarMenuButton onClick={() => switchCanvas(canvas.id)} isActive={canvas.id === currentCanvasId}>
+                      <RiArtboard2Line className="size-4 shrink-0" />
+                      <span className="truncate">{canvas.name}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))
+              ) : (
+                <>
+                  <SidebarMenuSkeleton />
+                  <SidebarMenuSkeleton />
+                  <SidebarMenuSkeleton />
+                  <SidebarMenuSkeleton />
+                  <SidebarMenuSkeleton />
+                  <SidebarMenuSkeleton />
+                </>
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

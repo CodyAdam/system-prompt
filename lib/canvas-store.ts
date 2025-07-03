@@ -13,6 +13,8 @@ import z from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { computeNode, ComputeNodeInput } from "./compute";
+import { nanoid } from "nanoid";
+import { newCanvas, templates } from './templates';
 
 // Zod schemas for validation
 const nodeSchema = z.object({
@@ -91,64 +93,32 @@ export interface CanvasState {
   abortAllOperations: () => void;
 }
 
-const generateId = () => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+const generateId = () => nanoid();
 
 // Create consistent empty arrays to avoid infinite loops
 const EMPTY_NODES: Node[] = [];
 const EMPTY_EDGES: Edge[] = [];
 
-const defaultNodes: Node[] = [
-  {
-    id: "1",
-    data: { prompt: "Yesterday, I seen a dog in the park, and he's owner was throwing a ball." },
-    position: { x: 0, y: 0 },
-    width: 500,
-    height: 200,
-    type: "prompt",
-  },
-  {
-    id: "2",
-    data: { systemPrompt: "proofread this text", modelId: undefined },
-    position: { x: 0, y: 300 },
-    width: 500,
-    height: 200,
-    type: "ai",
-  },
-  {
-    id: "3",
-    data: { text: undefined },
-    position: { x: 0, y: 600 },
-    width: 600,
-    height: 600,
-    type: "markdown",
-  },
-];
-
-const defaultEdges: Edge[] = [
-  { id: "1-2", source: "1", target: "2", type: "default", animated: false },
-  { id: "2-3", source: "2", target: "3", type: "default", animated: false },
-];
-
 export const useCanvasStore = create<CanvasState>()(
   persist(
     (set, get) => ({
       abortController: new AbortController(),
-      canvases: [],
-      currentCanvasId: null,
+      canvases: templates,
+      currentCanvasId: templates[0].id,
 
       createCanvas: (name?: string) => {
         const id = generateId();
-        const newCanvas: Canvas = {
+        const canvas: Canvas = {
           id,
           name: name || `Canvas ${get().canvases.length + 1}`,
-          nodes: [...defaultNodes],
-          edges: [...defaultEdges],
+          nodes: [...newCanvas.nodes],
+          edges: [...newCanvas.edges],
           createdAt: new Date(),
           updatedAt: new Date(),
         };
 
         set((state) => ({
-          canvases: [...state.canvases, newCanvas],
+          canvases: [...state.canvases, canvas],
           currentCanvasId: id,
         }));
 
@@ -206,16 +176,15 @@ export const useCanvasStore = create<CanvasState>()(
             toast.error(`Invalid canvas format: ${errorMessage}`);
             return;
           }
-
-          const canvasData = validationResult.data;
           const id = generateId();
+          const canvasData = validationResult.data;
           const newCanvas: Canvas = {
             id,
             name: canvasData.name,
-            nodes: canvasData.nodes as Node[],
-            edges: canvasData.edges as Edge[],
-            updatedAt: canvasData.updatedAt || new Date(),
-            createdAt: canvasData.createdAt || new Date(),
+            nodes: canvasData.nodes,
+            edges: canvasData.edges,
+            updatedAt: new Date(),
+            createdAt: new Date(),
           };
           set((state) => ({
             canvases: [...state.canvases, newCanvas],
@@ -573,18 +542,14 @@ export const useCanvasStore = create<CanvasState>()(
         // Create new controller and reset all loading states
         set((state) => ({
           abortController: new AbortController(),
-          canvases: state.canvases.map((canvas) => ({
-            ...canvas,
-            edges: canvas.edges.map((edge) => ({ ...edge, animated: false })),
-            nodes: canvas.nodes.map((node) => ({ ...node, data: { ...node.data, loading: false } })),
-          })),
+          canvases: state.canvases.map(getCleanedCanvas),
         }));
       },
     }),
     {
       name: "canvas-storage",
       partialize: (state) => ({
-        canvases: state.canvases,
+        canvases: state.canvases.map(getCleanedCanvas),
         currentCanvasId: state.currentCanvasId,
       }),
       onRehydrateStorage: () => (state) => {
@@ -595,3 +560,24 @@ export const useCanvasStore = create<CanvasState>()(
     }
   )
 );
+
+export function getCleanedCanvas(canvas: Canvas) {
+  return {
+    ...canvas,
+    edges: canvas.edges.map((edge) => ({
+      id: edge.id,
+      source: edge.source,
+      target: edge.target,
+      type: edge.type,
+      animated: false,
+    })),
+    nodes: canvas.nodes.map((node) => ({
+      id: node.id,
+      data: { ...node.data, loading: false },
+      position: node.position,
+      width: node.width,
+      height: node.height,
+      type: node.type,
+    })),
+  };
+}
