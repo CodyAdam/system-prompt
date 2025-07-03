@@ -1,14 +1,13 @@
 import { NodeCard } from "@/components/node-card";
-import { Textarea } from "@/components/ui/textarea";
 import { baseNodeDataSchema } from "@/lib/base-node";
-import { useCanvasStore } from "@/lib/canvas-store";
 import { ComputeNodeFunction, ComputeNodeInput, formatInputs } from "@/lib/compute";
+import { useWorkflowStore } from "@/lib/workflow-store";
 import { Handle, Position, type NodeTypes } from "@xyflow/react";
 import { useCallback, useMemo } from "react";
 import { z } from "zod";
+import { DebouncedTextarea } from '../debounced-textarea';
 import { Input } from "../ui/input";
 import { ErrorNode } from "./error-node";
-import { DebouncedTextarea } from '../debounced-textarea';
 
 export const promptNodeDataSchema = baseNodeDataSchema.extend({
   prompt: z.string(),
@@ -43,7 +42,7 @@ export const computePrompt: ComputeNodeFunction<PromptNodeData> = async (
 };
 
 export const PromptNode: NodeTypes[keyof NodeTypes] = (props) => {
-  const updateNodeData = useCanvasStore((state) => state.updateNodeData);
+  const updateNodeData = useWorkflowStore((state) => state.updateNodeData);
 
   const parsedData = useMemo(() => {
     return promptNodeDataSchema.safeParse(props.data);

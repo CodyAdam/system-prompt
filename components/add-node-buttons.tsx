@@ -1,4 +1,4 @@
-import { useCanvasStore } from '@/lib/canvas-store';
+import { useWorkflowStore } from '@/lib/workflow-store';
 import { RiAddLine } from '@remixicon/react';
 import { useReactFlow } from '@xyflow/react';
 import { memo, useCallback } from 'react';
@@ -9,7 +9,7 @@ export const AddNodeButtons = memo(AddNodeButtonsRaw);
 // Component for add node buttons that uses viewport to center new nodes
 function AddNodeButtonsRaw() {
   const instance = useReactFlow();
-  const addNode = useCanvasStore((state) => state.addNode);
+  const addNode = useWorkflowStore((state) => state.addNode);
 
   const handleAddNode = useCallback(
     (type: string) => {

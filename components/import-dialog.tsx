@@ -10,13 +10,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { useCanvasStore } from "@/lib/canvas-store";
+import { useWorkflowStore } from "@/lib/workflow-store";
 import { useState } from "react";
 
 export default function ImportDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [jsonInput, setJsonInput] = useState("");
-  const importFromJson = useCanvasStore((state) => state.importFromJson);
+  const importFromJson = useWorkflowStore((state) => state.importFromJson);
 
   const handleImport = () => {
     importFromJson(jsonInput.trim());
@@ -29,15 +29,15 @@ export default function ImportDialog({ children }: { children: React.ReactNode }
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Import Canvas</DialogTitle>
+          <DialogTitle>Import Workflow</DialogTitle>
           <DialogDescription>
-            Paste the JSON data of a canvas to import it. This will create a new canvas with the imported data.
+            Paste the JSON data of a workflow to import it. This will create a new workflow with the imported data.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           <Textarea
-            placeholder="Paste your canvas JSON here..."
+            placeholder="Paste your workflow JSON here..."
             value={jsonInput}
             onChange={(e) => setJsonInput(e.target.value)}
             className="h-[300px] break-all font-mono text-sm overflow-y-auto"
@@ -48,7 +48,7 @@ export default function ImportDialog({ children }: { children: React.ReactNode }
               Cancel
             </Button>
             <Button onClick={handleImport} disabled={!jsonInput.trim()}>
-              Import Canvas
+              Import Workflow
             </Button>
           </div>
         </div>

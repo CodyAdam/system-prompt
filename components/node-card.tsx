@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { BaseNodeData } from "@/lib/base-node";
-import { useCanvasStore } from "@/lib/canvas-store";
 import { cn } from "@/lib/utils";
+import { useWorkflowStore } from "@/lib/workflow-store";
 import {
   RiDeleteBin2Line,
   RiErrorWarningFill,
@@ -29,10 +29,10 @@ export function NodeCard({
   node: NodeProps<Node<BaseNodeData>>;
 }) {
   
-  const removeNode = useCanvasStore((state) => state.removeNode);
-  const runNode = useCanvasStore((state) => state.runNode);
+  const removeNode = useWorkflowStore((state) => state.removeNode);
+  const runNode = useWorkflowStore((state) => state.runNode);
   const isLoading = useMemo(() => node.data?.loading === true, [node.data]);
-  const addNode = useCanvasStore((state) => state.addNode);
+  const addNode = useWorkflowStore((state) => state.addNode);
   const error = useMemo(() => {
     const validatedError = z.string().safeParse(node.data?.error);
     return validatedError.success ? validatedError.data : null;

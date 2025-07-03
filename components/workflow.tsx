@@ -1,11 +1,11 @@
 "use client";
 
-import { useCanvasStore, type CanvasState } from "@/lib/canvas-store";
+import { useWorkflowStore, type WorkflowState } from "@/lib/workflow-store";
 import { Background, Controls, ReactFlow, SelectionMode, type NodeTypes } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useTheme } from "next-themes";
 import { useShallow } from "zustand/react/shallow";
-import { CanvasPanels } from "./canvas-panels";
+import { Panels } from "./panels";
 import Logo from "./logo";
 import { AiNode } from "./nodes/ai-node";
 import { AnnotationNode } from "./nodes/annotation-node";
@@ -22,37 +22,37 @@ const nodeTypes: NodeTypes = {
   annotation: AnnotationNode,
 };
 
-const selector = (state: CanvasState) => ({
+const selector = (state: WorkflowState) => ({
   nodes: state.getNodes(),
   edges: state.getEdges(),
   onNodesChange: state.onNodesChange,
   onEdgesChange: state.onEdgesChange,
   onConnect: state.onConnect,
-  deleteCanvas: state.deleteCanvas,
-  updateCanvasName: state.updateCanvasName,
-  getCurrentCanvas: state.getCurrentCanvas,
-  currentCanvasId: state.currentCanvasId,
-  canvases: state.canvases,
+  deleteWorkflow: state.deleteWorkflow,
+  updateWorkflowName: state.updateWorkflowName,
+  getCurrentWorkflow: state.getCurrentWorkflow,
+  currentWorkflowId: state.currentWorkflowId,
+  workflows: state.workflows,
   addNode: state.addNode,
   abortAllOperations: state.abortAllOperations,
   isRunning: state.getNodes().some((node) => node.data.loading),
 });
 
-export default function Canvas() {
+export default function Workflow() {
   const { resolvedTheme } = useTheme();
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, currentCanvasId } = useCanvasStore(
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, currentWorkflowId } = useWorkflowStore(
     useShallow(selector)
   );
 
-  // Don't render if no current canvas
-  if (!currentCanvasId) {
+  // Don't render if no current workflow
+  if (!currentWorkflowId) {
     return (
       <div className="w-full h-full flex items-center justify-center">
         <SidebarTrigger className="absolute top-4 left-4" />
         <div className="text-center flex flex-col items-center gap-2">
           <Logo className="size-40" />
-          <p className="text-foreground font-semibold text-2xl tracking-tight">No canvas selected</p>
-          <p className="text-sm text-muted-foreground">Create a canvas from the sidebar to get started</p>
+          <p className="text-foreground font-semibold text-2xl tracking-tight">No workflow selected</p>
+          <p className="text-sm text-muted-foreground">Create a workflow from the sidebar to get started</p>
         </div>
       </div>
     );
@@ -60,7 +60,7 @@ export default function Canvas() {
 
   return (
     <ReactFlow
-      key={currentCanvasId}
+      key={currentWorkflowId}
       nodes={nodes}
       onNodesChange={onNodesChange}
       edges={edges}
@@ -86,7 +86,7 @@ export default function Canvas() {
     >
       <Background bgColor="var(--color-background)" />
       <Controls />
-      <CanvasPanels />
+      <Panels />
     </ReactFlow>
   );
 }

@@ -13,17 +13,17 @@ import {
   SidebarMenuItem,
   SidebarMenuSkeleton,
 } from "@/components/ui/sidebar";
-import { useCanvasStore } from "@/lib/canvas-store";
+import { useWorkflowStore } from "@/lib/workflow-store";
 import {
   RiAddLine,
   RiArrowDownBoxLine,
-  RiArtboard2Line,
   RiComputerLine,
   RiGithubLine,
   RiKeyLine,
   RiMoonLine,
-  RiSunLine,
+  RiSunLine
 } from "@remixicon/react";
+import { MoreVerticalIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -36,42 +36,51 @@ export function AppSidebar() {
   const { setTheme, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  const { createCanvas, switchCanvas, currentCanvasId } = useCanvasStore(
+  const { createWorkflow, switchWorkflow, currentWorkflowId } = useWorkflowStore(
     useShallow((state) => ({
-      createCanvas: state.createCanvas,
-      switchCanvas: state.switchCanvas,
-      currentCanvasId: state.currentCanvasId,
+      createWorkflow: state.createWorkflow,
+      switchWorkflow: state.switchWorkflow,
+      currentWorkflowId: state.currentWorkflowId,
     }))
   );
 
-  const serializedCanvases = useCanvasStore(
-    useShallow((state) => {
-      const canvases = state.canvases.map((canvas) => ({
-        name: canvas.name,
-        id: canvas.id,
-        createdAt: new Date(canvas.createdAt).toISOString(),
-      }));
-      return canvases
+  const serializedWorkflows = useWorkflowStore(
+    useShallow((state) =>
+      state.workflows
+        .map((workflow) => ({
+          name: workflow.name,
+          id: workflow.id,
+          createdAt: new Date(workflow.createdAt).toISOString(),
+        }))
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-        .map((canvas) => `${canvas.name}:${canvas.id}`);
-    })
+        .map((workflow) => `${workflow.name}:${workflow.id}`)
+    )
   );
 
-  const canvases = useMemo(() => {
-    return serializedCanvases.map((canvas) => {
-      const lastDashIndex = canvas.lastIndexOf(":");
-      const name = canvas.substring(0, lastDashIndex);
-      const id = canvas.substring(lastDashIndex + 1);
+  const workflows = useMemo(() => {
+    return serializedWorkflows.map((workflow) => {
+      const lastDashIndex = workflow.lastIndexOf(":");
+      const name = workflow.substring(0, lastDashIndex);
+      const id = workflow.substring(lastDashIndex + 1);
       return {
         name,
         id,
       };
     });
-  }, [serializedCanvases]);
+  }, [serializedWorkflows]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const menuItems = workflows.map((workflow) => (
+    <SidebarMenuItem key={workflow.id}>
+      <SidebarMenuButton onClick={() => switchWorkflow(workflow.id)} isActive={workflow.id === currentWorkflowId}>
+        <MoreVerticalIcon className="h-5 w-5" />
+        <span className="truncate">{workflow.name}</span>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  ));
 
   return (
     <Sidebar>
@@ -91,9 +100,9 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => createCanvas()}>
+                <SidebarMenuButton onClick={() => createWorkflow()}>
                   <RiAddLine className="size-4 shrink-0" />
-                  New Canvas
+                  New Workflow
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
@@ -108,18 +117,11 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>Canvas</SidebarGroupLabel>
+          <SidebarGroupLabel>Workflows</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {mounted ? (
-                canvases.map((canvas) => (
-                  <SidebarMenuItem key={canvas.id}>
-                    <SidebarMenuButton onClick={() => switchCanvas(canvas.id)} isActive={canvas.id === currentCanvasId}>
-                      <RiArtboard2Line className="size-4 shrink-0" />
-                      <span className="truncate">{canvas.name}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))
+                menuItems
               ) : (
                 <>
                   <SidebarMenuSkeleton />

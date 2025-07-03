@@ -51,7 +51,7 @@
 System Prompt offers:
 
 - 💯&nbsp;Free & open-source.
-- 🎨&nbsp;Infinite, canvas-based workflow builder.
+- 🎨&nbsp;Infinite canvas, node-based workflow builder.
 - 🔄&nbsp;Reusable AI templates and workflows.
 - 🔗&nbsp;Chain multiple AI operations seamlessly.
 - 🔑&nbsp;Bring your own API keys - works with any AI model.
@@ -86,7 +86,7 @@ System Prompt offers:
 
 Simply visit [systemprompt.app](https://systemprompt.app) and start building:
 
-1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your canvas
+1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your workflow
 2. **Define Instructions**: Set up your system prompts and parameters
 3. **Connect & Chain**: Link nodes to create complex workflows
 4. **Save & Reuse**: Your templates are ready for any future use
@@ -98,7 +98,7 @@ Each node has a Run button, when you click on it, it will run the node and send 
 - **Prompt Nodes**: It's a text input, you can use it to provide inputs to your AI nodes. Add a label to differentiate between different prompt nodes.
 - **AI Nodes**: Take any inputs like prompt nodes and generate an LLM response based those inputs, the AI model you choose and the system prompt you provide.
 - **Markdown Nodes**: Format and display outputs as Markdown text from any node connected to it.
-- **Annotation Nodes**: Add documentation and guidance to your canvas. (Not runnable)
+- **Annotation Nodes**: Add documentation and guidance to your workflow. (Not runnable)
 
 ## Contributing
 
@@ -108,7 +108,7 @@ Each node has a Run button, when you click on it, it will run the node and send 
 
 ## Credits
 
-- **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions
+- **Node-based graph**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions
 - **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows
 
 ## License

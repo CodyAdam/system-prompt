@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { AppSidebar } from "../components/app-sidebar";
 
-const Canvas = dynamic(() => import("../components/canvas"), { ssr: false });
+const Workflow = dynamic(() => import("../components/workflow"), { ssr: false });
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       <AppSidebar />
       <main className="w-full h-screen relative">
         <Suspense fallback={<div>Loading...</div>}>
-          <Canvas />
+          <Workflow />
         </Suspense>
       </main>
     </SidebarProvider>

@@ -1,15 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { baseNodeDataSchema } from "@/lib/base-node";
-import { useCanvasStore } from "@/lib/canvas-store";
 import { cn } from "@/lib/utils";
-import {
-  RiCloseLine,
-  RiDeleteBin2Line,
-  RiDragMove2Line,
-  RiExpandDiagonalS2Line,
-  RiFileCopyLine,
-} from "@remixicon/react";
+import { useWorkflowStore } from "@/lib/workflow-store";
+import { RiDeleteBin2Line, RiExpandDiagonalS2Line, RiFileCopyLine } from "@remixicon/react";
 import { NodeResizeControl, NodeToolbar, type NodeTypes } from "@xyflow/react";
 import { useCallback, useMemo } from "react";
 import { z } from "zod";
@@ -19,12 +13,10 @@ export const annotationNodeDataSchema = baseNodeDataSchema.extend({
   text: z.string(),
 });
 
-type AnnotationNodeData = z.infer<typeof annotationNodeDataSchema>;
-
 export const AnnotationNode: NodeTypes[keyof NodeTypes] = (props) => {
-  const updateNodeData = useCanvasStore((state) => state.updateNodeData);
-  const removeNode = useCanvasStore((state) => state.removeNode);
-  const addNode = useCanvasStore((state) => state.addNode);
+  const updateNodeData = useWorkflowStore((state) => state.updateNodeData);
+  const removeNode = useWorkflowStore((state) => state.removeNode);
+  const addNode = useWorkflowStore((state) => state.addNode);
   const parsedData = useMemo(() => {
     return annotationNodeDataSchema.safeParse(props.data);
   }, [props.data]);

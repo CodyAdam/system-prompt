@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { getCleanedCanvas, useCanvasStore, type CanvasState } from "@/lib/canvas-store";
+import { getCleanedWorkflow, useWorkflowStore, type WorkflowState } from "@/lib/workflow-store";
 import {
   RiAiGenerate2,
   RiArrowUpBoxLine,
@@ -21,22 +21,33 @@ import { memo, useCallback } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 
+export const Panels = memo(function Panels() {
+  return (
+    <>
+      <TopLeftPanel />
+      <TopRightPanel />
+      <BottomCenterPanel />
+      <BottomRightPanel />
+    </>
+  );
+});
+
 const TopLeftPanel = memo(function TopLeftPanel() {
-  const { updateCanvasName, currentName, currentCanvasId } = useCanvasStore(
-    useShallow((state: CanvasState) => ({
-      updateCanvasName: state.updateCanvasName,
-      currentName: state.getCurrentCanvas()?.name,
-      currentCanvasId: state.currentCanvasId,
+  const { updateWorkflowName, currentName, currentWorkflowId } = useWorkflowStore(
+    useShallow((state: WorkflowState) => ({
+      updateWorkflowName: state.updateWorkflowName,
+      currentName: state.getCurrentWorkflow()?.name,
+      currentWorkflowId: state.currentWorkflowId,
     }))
   );
 
   const handleCanvasNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (currentCanvasId) {
-        updateCanvasName(currentCanvasId, e.target.value);
+      if (currentWorkflowId) {
+        updateWorkflowName(currentWorkflowId, e.target.value);
       }
     },
-    [currentCanvasId, updateCanvasName]
+    [currentWorkflowId, updateWorkflowName]
   );
 
   if (currentName === undefined) return null;
@@ -57,29 +68,29 @@ const TopLeftPanel = memo(function TopLeftPanel() {
 });
 
 const TopRightPanel = memo(function TopRightPanel() {
-  const { deleteCanvas, getCurrentCanvas, currentCanvasId, abortAllOperations, isRunning } = useCanvasStore(
-    useShallow((state: CanvasState) => ({
-      deleteCanvas: state.deleteCanvas,
-      getCurrentCanvas: state.getCurrentCanvas,
-      currentCanvasId: state.currentCanvasId,
+  const { deleteWorkflow, getCurrentWorkflow, currentWorkflowId, abortAllOperations, isRunning } = useWorkflowStore(
+    useShallow((state: WorkflowState) => ({
+      deleteWorkflow: state.deleteWorkflow,
+      getCurrentWorkflow: state.getCurrentWorkflow,
+      currentWorkflowId: state.currentWorkflowId,
       abortAllOperations: state.abortAllOperations,
       isRunning: state.getNodes().some((node) => node.data.loading),
     }))
   );
 
-  const handleDeleteCanvas = useCallback(() => {
-    if (currentCanvasId && confirm("Are you sure you want to delete this canvas? This action cannot be undone.")) {
-      deleteCanvas(currentCanvasId);
+  const handleDeleteWorkflow = useCallback(() => {
+    if (currentWorkflowId && confirm("Are you sure you want to delete this workflow? This action cannot be undone.")) {
+      deleteWorkflow(currentWorkflowId);
     }
-  }, [currentCanvasId, deleteCanvas]);
+  }, [currentWorkflowId, deleteWorkflow]);
 
   const handleExportToClipboard = useCallback(() => {
-    const canvas = getCurrentCanvas();
-    if (canvas) {
-      navigator.clipboard.writeText(JSON.stringify(getCleanedCanvas(canvas), null, 2));
-      toast.success("Canvas copied to clipboard");
+    const workflow = getCurrentWorkflow();
+    if (workflow) {
+      navigator.clipboard.writeText(JSON.stringify(getCleanedWorkflow(workflow), null, 2));
+      toast.success("Workflow copied to clipboard");
     }
-  }, [getCurrentCanvas]);
+  }, [getCurrentWorkflow]);
 
   return (
     <Panel position="top-right">
@@ -97,11 +108,11 @@ const TopRightPanel = memo(function TopRightPanel() {
         <Button
           variant="outline"
           size="sm"
-          onClick={handleDeleteCanvas}
+          onClick={handleDeleteWorkflow}
           className="text-destructive hover:text-destructive"
         >
           <RiDeleteBin2Line className="size-4" />
-          <span className="hidden sm:block">Delete Canvas</span>
+          <span className="hidden sm:block">Delete Workflow</span>
         </Button>
       </div>
     </Panel>
@@ -110,7 +121,7 @@ const TopRightPanel = memo(function TopRightPanel() {
 
 const BottomCenterPanel = memo(function BottomCenterPanel() {
   const instance = useReactFlow();
-  const addNode = useCanvasStore((state: CanvasState) => state.addNode);
+  const addNode = useWorkflowStore((state: WorkflowState) => state.addNode);
 
   const handleAddNode = useCallback(
     (type: string) => {
@@ -212,16 +223,5 @@ const BottomRightPanel = memo(function BottomRightPanel() {
         </Link>
       </span>
     </Panel>
-  );
-});
-
-export const CanvasPanels = memo(function CanvasPanels() {
-  return (
-    <>
-      <TopLeftPanel />
-      <TopRightPanel />
-      <BottomCenterPanel />
-      <BottomRightPanel />
-    </>
   );
 });

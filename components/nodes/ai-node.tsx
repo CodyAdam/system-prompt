@@ -11,8 +11,8 @@ import {
 import { providers } from "@/lib/ai";
 import { useApiKeysStore } from "@/lib/api-key-store";
 import { baseNodeDataSchema } from "@/lib/base-node";
-import { useCanvasStore } from "@/lib/canvas-store";
 import { ComputeNodeFunction, ComputeNodeInput, formatInputs } from "@/lib/compute";
+import { useWorkflowStore } from "@/lib/workflow-store";
 import { RiSearchEyeLine } from "@remixicon/react";
 import { Handle, Position, type NodeTypes } from "@xyflow/react";
 import { generateText } from "ai";
@@ -95,9 +95,9 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
   const parsedData = useMemo(() => {
     return aiNodeDataSchema.safeParse(props.data);
   }, [props.data]);
-  const updateNodeData = useCanvasStore((state) => state.updateNodeData);
+  const updateNodeData = useWorkflowStore((state) => state.updateNodeData);
   const [open, setOpen] = useState(false);
-  const formatedPrompt = useCanvasStore((state) => {
+  const formatedPrompt = useWorkflowStore((state) => {
     if (!open) {
       return null;
     }
