@@ -11,8 +11,8 @@ export default function Home() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="w-full h-screen relative">
-        <Suspense fallback={<div>Loading...</div>}>
+      <main className="w-full h-svh relative">
+        <Suspense fallback={null}>
           <Workflow />
         </Suspense>
       </main>

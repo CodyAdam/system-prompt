@@ -1,17 +1,19 @@
 "use client";
 
 import { useWorkflowStore, type WorkflowState } from "@/lib/workflow-store";
-import { Background, Controls, ReactFlow, SelectionMode, type NodeTypes } from "@xyflow/react";
+import { Background, Controls, ReactFlow, ReactFlowProps, SelectionMode, type NodeTypes } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useTheme } from "next-themes";
+import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { Panels } from "./panels";
 import Logo from "./logo";
 import { AiNode } from "./nodes/ai-node";
 import { AnnotationNode } from "./nodes/annotation-node";
 import { MarkdownNode } from "./nodes/markdown-node";
 import { PromptNode } from "./nodes/prompt-node";
+import { Panels } from "./panels";
 import { SidebarTrigger } from "./ui/sidebar";
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const panOnDrag = [1, 2];
 
@@ -43,6 +45,16 @@ export default function Workflow() {
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, currentWorkflowId } = useWorkflowStore(
     useShallow(selector)
   );
+  const isMobile = useIsMobile()
+  const controlSettings = useMemo((): Partial<ReactFlowProps> => {
+    return isMobile
+      ? { panOnScroll: false, selectionOnDrag: false, panOnDrag: true }
+      : {
+          panOnScroll: true,
+          selectionOnDrag: true,
+          panOnDrag: panOnDrag,
+        };
+  }, [isMobile]);
 
   // Don't render if no current workflow
   if (!currentWorkflowId) {
@@ -70,9 +82,6 @@ export default function Workflow() {
       colorMode={resolvedTheme === "dark" ? "dark" : "light"}
       className="w-full h-full animate-in fade-in-0 duration-300"
       fitView
-      panOnScroll
-      selectionOnDrag
-      panOnDrag={panOnDrag}
       selectionMode={SelectionMode.Partial}
       deleteKeyCode={["Backspace", "Delete"]}
       multiSelectionKeyCode={["Shift", "Control", "Meta"]}
@@ -83,6 +92,7 @@ export default function Workflow() {
         minZoom: 0.3,
       }}
       proOptions={{ hideAttribution: true }}
+      {...controlSettings}
     >
       <Background bgColor="var(--color-background)" />
       <Controls />
