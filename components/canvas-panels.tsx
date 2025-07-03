@@ -4,8 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { getCleanedCanvas, useCanvasStore, type CanvasState } from "@/lib/canvas-store";
-import { RiAiGenerate2, RiArrowUpBoxLine, RiChatQuoteLine, RiDeleteBin2Line, RiMarkdownLine, RiStopLine, RiTextSnippet } from "@remixicon/react";
+import {
+  RiAiGenerate2,
+  RiArrowUpBoxLine,
+  RiChatQuoteLine,
+  RiDeleteBin2Line,
+  RiMarkdownLine,
+  RiStopLine,
+  RiTextSnippet,
+} from "@remixicon/react";
 import { Panel, useReactFlow } from "@xyflow/react";
+import { useTheme } from "next-themes";
+import Image from "next/image";
 import Link from "next/link";
 import { memo, useCallback } from "react";
 import { toast } from "sonner";
@@ -175,9 +185,27 @@ const BottomCenterPanel = memo(function BottomCenterPanel() {
 });
 
 const BottomRightPanel = memo(function BottomRightPanel() {
+  const { resolvedTheme } = useTheme();
   return (
-    <Panel position="bottom-right">
-      <span className="text-xs text-muted-foreground">
+    <Panel position="bottom-right" className="flex flex-col gap-2 items-end">
+      <div className="hidden xl:block">
+        <a
+          href="https://www.producthunt.com/products/system-prompt?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-system&#0045;prompt"
+          target="_blank"
+        >
+          <Image
+            unoptimized
+            src={`https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=987653&theme=${
+              resolvedTheme === "dark" ? "dark" : "light"
+            }&t=1751541996617`}
+            alt="System&#0032;Prompt - Free&#0032;node&#0045;based&#0032;AI&#0032;workflow&#0032;builder | Product Hunt"
+            style={{ width: "250px", height: "54px" }}
+            width="250"
+            height="54"
+          />
+        </a>
+      </div>
+      <span className="text-xs text-muted-foreground hidden sm:block">
         by{" "}
         <Link href="https://x.com/codyadm" target="_blank" className="underline">
           Cody Adam

@@ -6,13 +6,12 @@
 </a>
 
 <h4 align="center">
-  <a href="https://systemprompt.app">System Prompt App</a> |
-  <a href="https://systemprompt.app/blog">Blog</a>
+  <a href="https://systemprompt.app">System Prompt App</a>
 </h4>
 
 <div align="center">
   <h2>
-    An open source canvas-based AI workflow builder. </br>
+    Free node-based AI workflow builder. </br>
     Reusable and efficient for productivity. </br>
   <br />
   </h2>
@@ -20,11 +19,8 @@
 
 <br />
 <p align="center">
-  <a href="https://github.com/excalidraw/excalidraw/blob/master/LICENSE">
+  <a href="https://github.com/codyadam/system-prompt/blob/master/LICENSE">
     <img alt="System Prompt is released under the MIT license." src="https://img.shields.io/badge/license-MIT-blue.svg"  />
-  </a>
-  <a href="https://docs.excalidraw.com/docs/introduction/contributing">
-    <img alt="PRs welcome!" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat"  />
   </a>
   <a href="https://deepwiki.com/codyadam/system-prompt">
     <img alt="Ask DeepWiki" src="https://deepwiki.com/badge.svg" />
@@ -44,7 +40,7 @@
     </a>
     <figcaption>
       <p align="center">
-        Create reusable AI workflows with a clean, powerful, and intuitive flow canvas.
+        Create reusable AI tasks with drag-and-drop nodes. Fully local, free, and open-source. Use any AI model with your own API keys.
       </p>
     </figcaption>
   </figure>

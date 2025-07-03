@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "System Prompt",
   description:
-    "System Prompt is a free, locally-run tool designed to simplify and enhance your interaction with AI models. Move beyond endlessly retyping the same instructions. With System Prompt, you can save, manage, and chain your AI queries in a powerful visual canvas.",
+    "Free open-source node-based AI workflow builder. Create reusable tasks with drag-and-drop nodes, chain AI operations, use any model with your API keys. Runs entirely in browser, your data stays private. Perfect for email automation, content creation, data processing, etc.",
 };
 
 export default function RootLayout({
