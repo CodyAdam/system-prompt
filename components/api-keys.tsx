@@ -17,10 +17,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function ApiKeys({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(false);
   const [visibleInputs, setVisibleInputs] = useState<Record<string, boolean>>({});
   const [inputValues, setInputValues] = useState<Record<string, string>>({});
-  const { apiKeys, setApiKey, removeApiKey } = useApiKeysStore();
+  const { apiKeys, setApiKey, removeApiKey, open, setOpen } = useApiKeysStore();
 
   const handleSaveKey = (providerId: string) => {
     const apiKey = inputValues[providerId];

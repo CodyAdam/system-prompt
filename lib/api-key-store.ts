@@ -3,18 +3,22 @@ import { persist } from 'zustand/middleware'
 import { providers } from './ai'
 
 interface ApiKeysState {
+  open: boolean
   apiKeys: Record<string, string> // map provider to api key
   setApiKey: (provider: string, apiKey: string) => void
   getApiKey: (provider: string) => string | undefined
   getApiKeyFromModelId: (modelId: string) => string | undefined
   removeApiKey: (provider: string) => void
   clearAllApiKeys: () => void
+  setOpen: (open: boolean) => void
 }
 
 export const useApiKeysStore = create<ApiKeysState>()(
   persist(
     (set, get) => ({
+      open: false,
       apiKeys: {},
+      setOpen: (open: boolean) => set({ open }),
       setApiKey: (provider: string, apiKey: string) =>
         set((state) => ({
           apiKeys: {
@@ -36,6 +40,9 @@ export const useApiKeysStore = create<ApiKeysState>()(
     }),
     {
       name: 'api-keys-storage',
+      partialize: (state) => ({
+        apiKeys: state.apiKeys,
+      }),
     }
   )
 )

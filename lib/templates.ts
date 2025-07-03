@@ -108,7 +108,7 @@ export const templates: Workflow[] = [
       {
         id: "1751466924291-57yp9uodp",
         data: {
-          text: 'Since everything runs locally you need to use your own api key 🔑. \n\nAdd yours using "API Keys" button',
+          text: 'Since everything runs locally you need to use your own api key 🔑. \n\nAdd yours, go to "API Keys" in the sidebar',
           loading: false,
         },
         position: {

@@ -46,6 +46,12 @@
   </figure>
 </div>
 
+## What Problem It Solves
+
+System Prompt is for anyone who is tired of repeating themselves to AI.
+
+If you find yourself frequently typing the same instructions into a chat window — like "proofread this," "summarize that," or "translate this" — you're wasting valuable time. System Prompt eliminates this repetition. It allows you to create reusable workflows for your common AI tasks, so you can stop rewriting prompts and focus on the actual work.
+
 ## Features
 
 System Prompt offers:

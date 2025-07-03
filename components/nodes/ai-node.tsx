@@ -97,6 +97,7 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
   }, [props.data]);
   const updateNodeData = useWorkflowStore((state) => state.updateNodeData);
   const [open, setOpen] = useState(false);
+  const { setOpen: setApiKeysOpen } = useApiKeysStore();
   const formatedPrompt = useWorkflowStore((state) => {
     if (!open) {
       return null;
@@ -202,7 +203,7 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
         </TooltipProvider>
       }
     >
-      <div className="p-3 space-y-3 flex flex-col h-full overflow-hidden">
+      <div className="p-3 gap-3 flex flex-col h-full overflow-hidden">
         <div className="flex items-center gap-2 flex-wrap">
           <p className="text-sm text-muted-foreground"> {provider ? `Using ${provider}` : "No model selected"}</p>
           <Select value={parsedData.data.modelId} onValueChange={handleModelChange}>
@@ -223,7 +224,11 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
             </SelectContent>
           </Select>
         </div>
-        {provider && !key && <p className="text-xs text-destructive">API key is not configured for {provider}</p>}
+        {provider && !key && (
+          <button onClick={() => setApiKeysOpen(true)} className="text-xs text-destructive -mt-1 hover:underline cursor-pointer text-left underline-offset-4 w-fit">
+            API key is not configured for {provider}. Click here to set it.
+          </button>
+        )}
         <DebouncedTextarea
           name="systemPrompt"
           value={parsedData.data.systemPrompt}
