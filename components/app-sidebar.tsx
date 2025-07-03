@@ -21,7 +21,7 @@ import {
   RiGithubLine,
   RiKeyLine,
   RiMoonLine,
-  RiSunLine
+  RiSunLine,
 } from "@remixicon/react";
 import { MoreVerticalIcon } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -33,7 +33,7 @@ import ImportDialog from "./import-dialog";
 import Logo from "./logo";
 
 export function AppSidebar() {
-  const { setTheme, theme } = useTheme();
+  const { setTheme,resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   const { createWorkflow, switchWorkflow, currentWorkflowId } = useWorkflowStore(
@@ -156,17 +156,15 @@ export function AppSidebar() {
           <SidebarMenuItem>
             {mounted ? (
               <SidebarMenuButton
-                onClick={() => setTheme(theme === "dark" ? "light" : theme === "light" ? "system" : "dark")}
+                onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
                 suppressHydrationWarning
               >
-                {theme === "dark" ? (
+                {resolvedTheme === "dark" ? (
                   <RiSunLine className="size-4 shrink-0" suppressHydrationWarning />
-                ) : theme === "light" ? (
-                  <RiComputerLine className="size-4 shrink-0" suppressHydrationWarning />
                 ) : (
                   <RiMoonLine className="size-4 shrink-0" suppressHydrationWarning />
                 )}{" "}
-                {theme === "dark" ? "Light mode" : theme === "light" ? "System" : "Dark mode"}
+                {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
               </SidebarMenuButton>
             ) : (
               <SidebarMenuSkeleton />
