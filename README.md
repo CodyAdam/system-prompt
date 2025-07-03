@@ -80,6 +80,18 @@ System Prompt offers:
 
 *and many more... check out the [demo examples](https://systemprompt.app)*
 
+## Why I built this
+
+Honestly, it came from a personal frustration. I was wasting too much time opening new chat windows, writing the same instructions over and over, and then pasting my text.
+
+It was a constant cycle of things like:
+* "Proofread this text, use a casual language..." -> paste text.
+* "Respond to this email saying X, Y, Z..." -> paste email.
+
+These repetitive tasks were a drag on my productivity, and I wanted to create a solution that solved this specific issue.
+
+What started as a simple tool for reusable prompts ended up growing into something even more versatile. System Prompt is now a node-based workflow builder that allows for chaining multiple AI operations. It's a bit like tldraw's computer (which is a huge inspiration!), but with a focus on giving you more fine-grained control and creating production-ready workflows.
+
 ## Quick start
 
 **Note:** System Prompt runs entirely in your browser - no installation required!
