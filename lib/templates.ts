@@ -3,159 +3,168 @@ import { Canvas, getCleanedCanvas } from "./canvas-store";
 
 export const templates: Canvas[] = [
   {
-    id: "8eukMvIv2SYA06gYLfHra",
-    name: "Welcome 👋",
-    nodes: [
+    "id": "8eukMvIv2SYA06gYLfHra",
+    "name": "Welcome 👋",
+    "nodes": [
       {
-        id: "1751403213284-7dr7luzzv",
-        data: {
-          prompt:
-            "![System Prompt](/og.png)\n\n# *An open source canvas-based AI workflow builder*\n\n## 🚀 What is System Prompt?\n\n**System Prompt** is a free, open-source canvas-based AI workflow builder. Reusable and efficient for productivity. It transforms how you interact with AI models by letting you create visual workflows that can be saved and reused.\n\n## ✨ Key Features\n\nSystem Prompt offers:\n\n- 💯 Free & open-source\n- 🎨 Infinite, canvas-based workflow builder\n- 🔄 Reusable AI templates and workflows\n- 🔗 Chain multiple AI operations seamlessly\n- 🔑 Bring your own API keys - works with any AI model\n- 💻 Runs entirely in your browser - your data stays private\n- 🌓 Dark mode support\n- 📱 Responsive design works on all devices\n- 💾 Local storage - your workflows are saved automatically\n- 🎯 Drag-and-drop node creation and connection\n- ✍️ Rich text editing with markdown support\n- 📊 Visual flow connections between nodes\n- 🏷️ Annotation nodes for documentation\n\n## 💡 Use Cases\n\n**Email Management**\n- Create email response templates with specific tone and style\n- Just change the input email, get consistent professional responses\n\n**Content Creation**\n- Design once, deploy everywhere: Create social media posts for Twitter, LinkedIn, and Instagram from a single input\n- Maintain brand voice across all platforms\n\n**Data Processing**\n- Build multi-step analysis workflows\n- Chain data cleaning, analysis, and reporting operations\n\n*and many more... check out the [demo examples](https://systemprompt.app)*\n\n## Quick start\n\n**Note:** System Prompt runs entirely in your browser - no installation required!\n\nSimply visit [systemprompt.app](https://systemprompt.app) and start building:\n\n1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your canvas\n2. **Define Instructions**: Set up your system prompts and parameters\n3. **Connect & Chain**: Link nodes to create complex workflows\n4. **Save & Reuse**: Your templates are ready for any future use\n\n## Node Types\n\nEach node has a Run button, when you click on it, it will run the node and send the result to the next connected node.\n\n- **Prompt Nodes**: It's a text input, you can use it to provide inputs to your AI nodes. Add a label to differentiate between different prompt nodes.\n- **AI Nodes**: Take any inputs like prompt nodes and generate an LLM response based those inputs, the AI model you choose and the system prompt you provide.\n- **Markdown Nodes**: Format and display outputs as Markdown text from any node connected to it.\n- **Annotation Nodes**: Add documentation and guidance to your canvas. (Not runnable)\n\n## Contributing\n\n- Missing something or found a bug? [Report here](https://github.com/yourusername/system-prompt/issues).\n- Want to contribute? Check out our contribution guide.\n- Have ideas for new features? Let us know in the discussions.\n\n## Credits\n\n- **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions\n- **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows\n\n## License\n\nOpen source MIT and free to use. See LICENSE for details.\n",
-          dirty: false,
-          loading: false,
-          output:
-            "![System Prompt](/og.png)\n\n# *An open source canvas-based AI workflow builder*\n\n## 🚀 What is System Prompt?\n\n**System Prompt** is a free, open-source canvas-based AI workflow builder. Reusable and efficient for productivity. It transforms how you interact with AI models by letting you create visual workflows that can be saved and reused.\n\n## ✨ Key Features\n\nSystem Prompt offers:\n\n- 💯 Free & open-source\n- 🎨 Infinite, canvas-based workflow builder\n- 🔄 Reusable AI templates and workflows\n- 🔗 Chain multiple AI operations seamlessly\n- 🔑 Bring your own API keys - works with any AI model\n- 💻 Runs entirely in your browser - your data stays private\n- 🌓 Dark mode support\n- 📱 Responsive design works on all devices\n- 💾 Local storage - your workflows are saved automatically\n- 🎯 Drag-and-drop node creation and connection\n- ✍️ Rich text editing with markdown support\n- 📊 Visual flow connections between nodes\n- 🏷️ Annotation nodes for documentation\n\n## 💡 Use Cases\n\n**Email Management**\n- Create email response templates with specific tone and style\n- Just change the input email, get consistent professional responses\n\n**Content Creation**\n- Design once, deploy everywhere: Create social media posts for Twitter, LinkedIn, and Instagram from a single input\n- Maintain brand voice across all platforms\n\n**Data Processing**\n- Build multi-step analysis workflows\n- Chain data cleaning, analysis, and reporting operations\n\n*and many more... check out the [demo examples](https://systemprompt.app)*\n\n## Quick start\n\n**Note:** System Prompt runs entirely in your browser - no installation required!\n\nSimply visit [systemprompt.app](https://systemprompt.app) and start building:\n\n1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your canvas\n2. **Define Instructions**: Set up your system prompts and parameters\n3. **Connect & Chain**: Link nodes to create complex workflows\n4. **Save & Reuse**: Your templates are ready for any future use\n\n## Node Types\n\nEach node has a Run button, when you click on it, it will run the node and send the result to the next connected node.\n\n- **Prompt Nodes**: It's a text input, you can use it to provide inputs to your AI nodes. Add a label to differentiate between different prompt nodes.\n- **AI Nodes**: Take any inputs like prompt nodes and generate an LLM response based those inputs, the AI model you choose and the system prompt you provide.\n- **Markdown Nodes**: Format and display outputs as Markdown text from any node connected to it.\n- **Annotation Nodes**: Add documentation and guidance to your canvas. (Not runnable)\n\n## Contributing\n\n- Missing something or found a bug? [Report here](https://github.com/yourusername/system-prompt/issues).\n- Want to contribute? Check out our contribution guide.\n- Have ideas for new features? Let us know in the discussions.\n\n## Credits\n\n- **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions\n- **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows\n\n## License\n\nOpen source MIT and free to use. See LICENSE for details.\n",
-          label: "welcome message",
+        "id": "1751403213284-7dr7luzzv",
+        "data": {
+          "prompt": "![System Prompt](/og.png)\n\n# *An open source canvas-based AI workflow builder*\n\n## 🚀 What is System Prompt?\n\n**System Prompt** is a free, open-source canvas-based AI workflow builder. Reusable and efficient for productivity. It transforms how you interact with AI models by letting you create visual workflows that can be saved and reused.\n\n## ✨ Key Features\n\nSystem Prompt offers:\n\n- 💯 Free & open-source\n- 🎨 Infinite, canvas-based workflow builder\n- 🔄 Reusable AI templates and workflows\n- 🔗 Chain multiple AI operations seamlessly\n- 🔑 Bring your own API keys - works with any AI model\n- 💻 Runs entirely in your browser - your data stays private\n- 🌓 Dark mode support\n- 📱 Responsive design works on all devices\n- 💾 Local storage - your workflows are saved automatically\n- 🎯 Drag-and-drop node creation and connection\n- ✍️ Rich text editing with markdown support\n- 📊 Visual flow connections between nodes\n- 🏷️ Annotation nodes for documentation\n\n## 💡 Use Cases\n\n**Email Management**\n- Create email response templates with specific tone and style\n- Just change the input email, get consistent professional responses\n\n**Content Creation**\n- Design once, deploy everywhere: Create social media posts for Twitter, LinkedIn, and Instagram from a single input\n- Maintain brand voice across all platforms\n\n**Data Processing**\n- Build multi-step analysis workflows\n- Chain data cleaning, analysis, and reporting operations\n\n*and many more... check out the [demo examples](https://systemprompt.app)*\n\n## Quick start\n\n**Note:** System Prompt runs entirely in your browser - no installation required!\n\nSimply visit [systemprompt.app](https://systemprompt.app) and start building:\n\n1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your canvas\n2. **Define Instructions**: Set up your system prompts and parameters\n3. **Connect & Chain**: Link nodes to create complex workflows\n4. **Save & Reuse**: Your templates are ready for any future use\n\n## Node Types\n\nEach node has a Run button, when you click on it, it will run the node and send the result to the next connected node.\n\n- **Prompt Nodes**: It's a text input, you can use it to provide inputs to your AI nodes. Add a label to differentiate between different prompt nodes.\n- **AI Nodes**: Take any inputs like prompt nodes and generate an LLM response based those inputs, the AI model you choose and the system prompt you provide.\n- **Markdown Nodes**: Format and display outputs as Markdown text from any node connected to it.\n- **Annotation Nodes**: Add documentation and guidance to your canvas. (Not runnable)\n\n## Contributing\n\n- Missing something or found a bug? [Report here](https://github.com/yourusername/system-prompt/issues).\n- Want to contribute? Check out our contribution guide.\n- Have ideas for new features? Let us know in the discussions.\n\n## Credits\n\n- **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions\n- **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows\n\n## License\n\nOpen source MIT and free to use. See LICENSE for details.\n",
+          "dirty": false,
+          "loading": false,
+          "output": "![System Prompt](/og.png)\n\n# *An open source canvas-based AI workflow builder*\n\n## 🚀 What is System Prompt?\n\n**System Prompt** is a free, open-source canvas-based AI workflow builder. Reusable and efficient for productivity. It transforms how you interact with AI models by letting you create visual workflows that can be saved and reused.\n\n## ✨ Key Features\n\nSystem Prompt offers:\n\n- 💯 Free & open-source\n- 🎨 Infinite, canvas-based workflow builder\n- 🔄 Reusable AI templates and workflows\n- 🔗 Chain multiple AI operations seamlessly\n- 🔑 Bring your own API keys - works with any AI model\n- 💻 Runs entirely in your browser - your data stays private\n- 🌓 Dark mode support\n- 📱 Responsive design works on all devices\n- 💾 Local storage - your workflows are saved automatically\n- 🎯 Drag-and-drop node creation and connection\n- ✍️ Rich text editing with markdown support\n- 📊 Visual flow connections between nodes\n- 🏷️ Annotation nodes for documentation\n\n## 💡 Use Cases\n\n**Email Management**\n- Create email response templates with specific tone and style\n- Just change the input email, get consistent professional responses\n\n**Content Creation**\n- Design once, deploy everywhere: Create social media posts for Twitter, LinkedIn, and Instagram from a single input\n- Maintain brand voice across all platforms\n\n**Data Processing**\n- Build multi-step analysis workflows\n- Chain data cleaning, analysis, and reporting operations\n\n*and many more... check out the [demo examples](https://systemprompt.app)*\n\n## Quick start\n\n**Note:** System Prompt runs entirely in your browser - no installation required!\n\nSimply visit [systemprompt.app](https://systemprompt.app) and start building:\n\n1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your canvas\n2. **Define Instructions**: Set up your system prompts and parameters\n3. **Connect & Chain**: Link nodes to create complex workflows\n4. **Save & Reuse**: Your templates are ready for any future use\n\n## Node Types\n\nEach node has a Run button, when you click on it, it will run the node and send the result to the next connected node.\n\n- **Prompt Nodes**: It's a text input, you can use it to provide inputs to your AI nodes. Add a label to differentiate between different prompt nodes.\n- **AI Nodes**: Take any inputs like prompt nodes and generate an LLM response based those inputs, the AI model you choose and the system prompt you provide.\n- **Markdown Nodes**: Format and display outputs as Markdown text from any node connected to it.\n- **Annotation Nodes**: Add documentation and guidance to your canvas. (Not runnable)\n\n## Contributing\n\n- Missing something or found a bug? [Report here](https://github.com/yourusername/system-prompt/issues).\n- Want to contribute? Check out our contribution guide.\n- Have ideas for new features? Let us know in the discussions.\n\n## Credits\n\n- **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions\n- **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows\n\n## License\n\nOpen source MIT and free to use. See LICENSE for details.\n",
+          "label": "welcome message"
         },
-        position: {
-          x: -327.665330998432,
-          y: 16.827278666687654,
+        "position": {
+          "x": -327.665330998432,
+          "y": 16.827278666687654
         },
-        width: 465,
-        height: 200,
-        type: "prompt",
+        "width": 465,
+        "height": 200,
+        "type": "prompt"
       },
       {
-        id: "1751403232367-q5y2cgwn7",
-        data: {
-          dirty: false,
-          loading: false,
-          output:
-            "<welcome_message>\n![System Prompt](/og.png)\n\n# *An open source canvas-based AI workflow builder*\n\n## 🚀 What is System Prompt?\n\n**System Prompt** is a free, open-source canvas-based AI workflow builder. Reusable and efficient for productivity. It transforms how you interact with AI models by letting you create visual workflows that can be saved and reused.\n\n## ✨ Key Features\n\nSystem Prompt offers:\n\n- 💯 Free & open-source\n- 🎨 Infinite, canvas-based workflow builder\n- 🔄 Reusable AI templates and workflows\n- 🔗 Chain multiple AI operations seamlessly\n- 🔑 Bring your own API keys - works with any AI model\n- 💻 Runs entirely in your browser - your data stays private\n- 🌓 Dark mode support\n- 📱 Responsive design works on all devices\n- 💾 Local storage - your workflows are saved automatically\n- 🎯 Drag-and-drop node creation and connection\n- ✍️ Rich text editing with markdown support\n- 📊 Visual flow connections between nodes\n- 🏷️ Annotation nodes for documentation\n\n## 💡 Use Cases\n\n**Email Management**\n- Create email response templates with specific tone and style\n- Just change the input email, get consistent professional responses\n\n**Content Creation**\n- Design once, deploy everywhere: Create social media posts for Twitter, LinkedIn, and Instagram from a single input\n- Maintain brand voice across all platforms\n\n**Data Processing**\n- Build multi-step analysis workflows\n- Chain data cleaning, analysis, and reporting operations\n\n*and many more... check out the [demo examples](https://systemprompt.app)*\n\n## Quick start\n\n**Note:** System Prompt runs entirely in your browser - no installation required!\n\nSimply visit [systemprompt.app](https://systemprompt.app) and start building:\n\n1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your canvas\n2. **Define Instructions**: Set up your system prompts and parameters\n3. **Connect & Chain**: Link nodes to create complex workflows\n4. **Save & Reuse**: Your templates are ready for any future use\n\n## Node Types\n\nEach node has a Run button, when you click on it, it will run the node and send the result to the next connected node.\n\n- **Prompt Nodes**: It's a text input, you can use it to provide inputs to your AI nodes. Add a label to differentiate between different prompt nodes.\n- **AI Nodes**: Take any inputs like prompt nodes and generate an LLM response based those inputs, the AI model you choose and the system prompt you provide.\n- **Markdown Nodes**: Format and display outputs as Markdown text from any node connected to it.\n- **Annotation Nodes**: Add documentation and guidance to your canvas. (Not runnable)\n\n## Contributing\n\n- Missing something or found a bug? [Report here](https://github.com/yourusername/system-prompt/issues).\n- Want to contribute? Check out our contribution guide.\n- Have ideas for new features? Let us know in the discussions.\n\n## Credits\n\n- **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions\n- **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows\n\n## License\n\nOpen source MIT and free to use. See LICENSE for details.\n</welcome_message>",
-          text: "<welcome_message>\n![System Prompt](/og.png)\n\n# *An open source canvas-based AI workflow builder*\n\n## 🚀 What is System Prompt?\n\n**System Prompt** is a free, open-source canvas-based AI workflow builder. Reusable and efficient for productivity. It transforms how you interact with AI models by letting you create visual workflows that can be saved and reused.\n\n## ✨ Key Features\n\nSystem Prompt offers:\n\n- 💯 Free & open-source\n- 🎨 Infinite, canvas-based workflow builder\n- 🔄 Reusable AI templates and workflows\n- 🔗 Chain multiple AI operations seamlessly\n- 🔑 Bring your own API keys - works with any AI model\n- 💻 Runs entirely in your browser - your data stays private\n- 🌓 Dark mode support\n- 📱 Responsive design works on all devices\n- 💾 Local storage - your workflows are saved automatically\n- 🎯 Drag-and-drop node creation and connection\n- ✍️ Rich text editing with markdown support\n- 📊 Visual flow connections between nodes\n- 🏷️ Annotation nodes for documentation\n\n## 💡 Use Cases\n\n**Email Management**\n- Create email response templates with specific tone and style\n- Just change the input email, get consistent professional responses\n\n**Content Creation**\n- Design once, deploy everywhere: Create social media posts for Twitter, LinkedIn, and Instagram from a single input\n- Maintain brand voice across all platforms\n\n**Data Processing**\n- Build multi-step analysis workflows\n- Chain data cleaning, analysis, and reporting operations\n\n*and many more... check out the [demo examples](https://systemprompt.app)*\n\n## Quick start\n\n**Note:** System Prompt runs entirely in your browser - no installation required!\n\nSimply visit [systemprompt.app](https://systemprompt.app) and start building:\n\n1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your canvas\n2. **Define Instructions**: Set up your system prompts and parameters\n3. **Connect & Chain**: Link nodes to create complex workflows\n4. **Save & Reuse**: Your templates are ready for any future use\n\n## Node Types\n\nEach node has a Run button, when you click on it, it will run the node and send the result to the next connected node.\n\n- **Prompt Nodes**: It's a text input, you can use it to provide inputs to your AI nodes. Add a label to differentiate between different prompt nodes.\n- **AI Nodes**: Take any inputs like prompt nodes and generate an LLM response based those inputs, the AI model you choose and the system prompt you provide.\n- **Markdown Nodes**: Format and display outputs as Markdown text from any node connected to it.\n- **Annotation Nodes**: Add documentation and guidance to your canvas. (Not runnable)\n\n## Contributing\n\n- Missing something or found a bug? [Report here](https://github.com/yourusername/system-prompt/issues).\n- Want to contribute? Check out our contribution guide.\n- Have ideas for new features? Let us know in the discussions.\n\n## Credits\n\n- **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions\n- **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows\n\n## License\n\nOpen source MIT and free to use. See LICENSE for details.\n</welcome_message>",
+        "id": "1751403232367-q5y2cgwn7",
+        "data": {
+          "dirty": false,
+          "loading": false,
+          "output": "<welcome_message>\n![System Prompt](/og.png)\n\n# *An open source canvas-based AI workflow builder*\n\n## 🚀 What is System Prompt?\n\n**System Prompt** is a free, open-source canvas-based AI workflow builder. Reusable and efficient for productivity. It transforms how you interact with AI models by letting you create visual workflows that can be saved and reused.\n\n## ✨ Key Features\n\nSystem Prompt offers:\n\n- 💯 Free & open-source\n- 🎨 Infinite, canvas-based workflow builder\n- 🔄 Reusable AI templates and workflows\n- 🔗 Chain multiple AI operations seamlessly\n- 🔑 Bring your own API keys - works with any AI model\n- 💻 Runs entirely in your browser - your data stays private\n- 🌓 Dark mode support\n- 📱 Responsive design works on all devices\n- 💾 Local storage - your workflows are saved automatically\n- 🎯 Drag-and-drop node creation and connection\n- ✍️ Rich text editing with markdown support\n- 📊 Visual flow connections between nodes\n- 🏷️ Annotation nodes for documentation\n\n## 💡 Use Cases\n\n**Email Management**\n- Create email response templates with specific tone and style\n- Just change the input email, get consistent professional responses\n\n**Content Creation**\n- Design once, deploy everywhere: Create social media posts for Twitter, LinkedIn, and Instagram from a single input\n- Maintain brand voice across all platforms\n\n**Data Processing**\n- Build multi-step analysis workflows\n- Chain data cleaning, analysis, and reporting operations\n\n*and many more... check out the [demo examples](https://systemprompt.app)*\n\n## Quick start\n\n**Note:** System Prompt runs entirely in your browser - no installation required!\n\nSimply visit [systemprompt.app](https://systemprompt.app) and start building:\n\n1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your canvas\n2. **Define Instructions**: Set up your system prompts and parameters\n3. **Connect & Chain**: Link nodes to create complex workflows\n4. **Save & Reuse**: Your templates are ready for any future use\n\n## Node Types\n\nEach node has a Run button, when you click on it, it will run the node and send the result to the next connected node.\n\n- **Prompt Nodes**: It's a text input, you can use it to provide inputs to your AI nodes. Add a label to differentiate between different prompt nodes.\n- **AI Nodes**: Take any inputs like prompt nodes and generate an LLM response based those inputs, the AI model you choose and the system prompt you provide.\n- **Markdown Nodes**: Format and display outputs as Markdown text from any node connected to it.\n- **Annotation Nodes**: Add documentation and guidance to your canvas. (Not runnable)\n\n## Contributing\n\n- Missing something or found a bug? [Report here](https://github.com/yourusername/system-prompt/issues).\n- Want to contribute? Check out our contribution guide.\n- Have ideas for new features? Let us know in the discussions.\n\n## Credits\n\n- **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions\n- **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows\n\n## License\n\nOpen source MIT and free to use. See LICENSE for details.\n</welcome_message>",
+          "text": "<welcome_message>\n![System Prompt](/og.png)\n\n# *An open source canvas-based AI workflow builder*\n\n## 🚀 What is System Prompt?\n\n**System Prompt** is a free, open-source canvas-based AI workflow builder. Reusable and efficient for productivity. It transforms how you interact with AI models by letting you create visual workflows that can be saved and reused.\n\n## ✨ Key Features\n\nSystem Prompt offers:\n\n- 💯 Free & open-source\n- 🎨 Infinite, canvas-based workflow builder\n- 🔄 Reusable AI templates and workflows\n- 🔗 Chain multiple AI operations seamlessly\n- 🔑 Bring your own API keys - works with any AI model\n- 💻 Runs entirely in your browser - your data stays private\n- 🌓 Dark mode support\n- 📱 Responsive design works on all devices\n- 💾 Local storage - your workflows are saved automatically\n- 🎯 Drag-and-drop node creation and connection\n- ✍️ Rich text editing with markdown support\n- 📊 Visual flow connections between nodes\n- 🏷️ Annotation nodes for documentation\n\n## 💡 Use Cases\n\n**Email Management**\n- Create email response templates with specific tone and style\n- Just change the input email, get consistent professional responses\n\n**Content Creation**\n- Design once, deploy everywhere: Create social media posts for Twitter, LinkedIn, and Instagram from a single input\n- Maintain brand voice across all platforms\n\n**Data Processing**\n- Build multi-step analysis workflows\n- Chain data cleaning, analysis, and reporting operations\n\n*and many more... check out the [demo examples](https://systemprompt.app)*\n\n## Quick start\n\n**Note:** System Prompt runs entirely in your browser - no installation required!\n\nSimply visit [systemprompt.app](https://systemprompt.app) and start building:\n\n1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your canvas\n2. **Define Instructions**: Set up your system prompts and parameters\n3. **Connect & Chain**: Link nodes to create complex workflows\n4. **Save & Reuse**: Your templates are ready for any future use\n\n## Node Types\n\nEach node has a Run button, when you click on it, it will run the node and send the result to the next connected node.\n\n- **Prompt Nodes**: It's a text input, you can use it to provide inputs to your AI nodes. Add a label to differentiate between different prompt nodes.\n- **AI Nodes**: Take any inputs like prompt nodes and generate an LLM response based those inputs, the AI model you choose and the system prompt you provide.\n- **Markdown Nodes**: Format and display outputs as Markdown text from any node connected to it.\n- **Annotation Nodes**: Add documentation and guidance to your canvas. (Not runnable)\n\n## Contributing\n\n- Missing something or found a bug? [Report here](https://github.com/yourusername/system-prompt/issues).\n- Want to contribute? Check out our contribution guide.\n- Have ideas for new features? Let us know in the discussions.\n\n## Credits\n\n- **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions\n- **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows\n\n## License\n\nOpen source MIT and free to use. See LICENSE for details.\n</welcome_message>"
         },
-        position: {
-          x: -726.9242612798938,
-          y: 367.15530861929153,
+        "position": {
+          "x": -755.590931327038,
+          "y": 473.3906152645907
         },
-        width: 623,
-        height: 885,
-        type: "markdown",
+        "width": 623,
+        "height": 885,
+        "type": "markdown"
       },
       {
-        id: "1751403403486-yzo9zsyv8",
-        data: {
-          systemPrompt: "Make a tldr to know what is the app about\n\nStart with TL;DR\n\n",
-          modelId: "gemini-2.5-flash",
-          dirty: false,
-          loading: false,
-          output:
-            "TL;DR: **System Prompt** is a free, open-source, canvas-based web app for visually building and reusing AI workflows. You drag-and-drop nodes (Prompt, AI, Markdown, Annotation) to chain AI operations, bring your own API keys for any AI model, and save reusable templates for tasks like email management or content creation. It runs entirely in your browser, keeping your data private.",
+        "id": "1751403403486-yzo9zsyv8",
+        "data": {
+          "systemPrompt": "Make a tldr to know what is the app about\n\nStart with TL;DR\n\n",
+          "modelId": "gemini-2.5-flash",
+          "dirty": false,
+          "loading": false,
+          "output": "TL;DR: **System Prompt** is a free, open-source, canvas-based web app for visually building and reusing AI workflows. You drag-and-drop nodes (Prompt, AI, Markdown, Annotation) to chain AI operations, bring your own API keys for any AI model, and save reusable templates for tasks like email management or content creation. It runs entirely in your browser, keeping your data private."
         },
-        position: {
-          x: -4.583680635039883,
-          y: 368.5658160112734,
+        "position": {
+          "x": -14.701328886973187,
+          "y": 469.7422985306059
         },
-        width: 503,
-        height: 261,
-        type: "ai",
+        "width": 503,
+        "height": 261,
+        "type": "ai"
       },
       {
-        id: "1751403450109-myk4kx31i",
-        data: {
-          loading: false,
-          dirty: false,
-          output:
-            "TL;DR: **System Prompt** is a free, open-source, canvas-based web app for visually building and reusing AI workflows. You drag-and-drop nodes (Prompt, AI, Markdown, Annotation) to chain AI operations, bring your own API keys for any AI model, and save reusable templates for tasks like email management or content creation. It runs entirely in your browser, keeping your data private.",
-          text: "TL;DR: **System Prompt** is a free, open-source, canvas-based web app for visually building and reusing AI workflows. You drag-and-drop nodes (Prompt, AI, Markdown, Annotation) to chain AI operations, bring your own API keys for any AI model, and save reusable templates for tasks like email management or content creation. It runs entirely in your browser, keeping your data private.",
+        "id": "1751403450109-myk4kx31i",
+        "data": {
+          "loading": false,
+          "dirty": false,
+          "output": "TL;DR: **System Prompt** is a free, open-source, canvas-based web app for visually building and reusing AI workflows. You drag-and-drop nodes (Prompt, AI, Markdown, Annotation) to chain AI operations, bring your own API keys for any AI model, and save reusable templates for tasks like email management or content creation. It runs entirely in your browser, keeping your data private.",
+          "text": "TL;DR: **System Prompt** is a free, open-source, canvas-based web app for visually building and reusing AI workflows. You drag-and-drop nodes (Prompt, AI, Markdown, Annotation) to chain AI operations, bring your own API keys for any AI model, and save reusable templates for tasks like email management or content creation. It runs entirely in your browser, keeping your data private."
         },
-        position: {
-          x: 1.6001159343593372,
-          y: 693.5594135923411,
+        "position": {
+          "x": -8.517532317573995,
+          "y": 794.7358961116737
         },
-        width: 491,
-        height: 260,
-        type: "markdown",
+        "width": 491,
+        "height": 260,
+        "type": "markdown"
       },
       {
-        id: "1751466867054-fc2d9xsmm",
-        data: {
-          text: "Hi Welcome to System Prompt!\n\nHere's how it works, you have 3 nodes:\n- Prompt: used as input for AI\n- AI: select a model and a system prompt \n- Markdown: show the output of an AI node\n\nLink nodes together and the output will be passed to the next one when pressing the ▶️ button.",
-          loading: false,
+        "id": "1751466867054-fc2d9xsmm",
+        "data": {
+          "text": "Hi Welcome to System Prompt!\n\nHere's how it works, you have 4 nodes:\n- Prompt: used as input for AI\n- AI: generate an AI response\n- Markdown: format and show the output\n- Annotation: document your canvas",
+          "loading": false
         },
-        position: {
-          x: -921.5664061080294,
-          y: -107.3368792981299,
+        "position": {
+          "x": -916.3327310290616,
+          "y": -94.3854597380373
         },
-        width: 524,
-        height: 432,
-        type: "annotation",
+        "width": 504,
+        "height": 294,
+        "type": "annotation"
       },
       {
-        id: "1751466885315-tpiiywm0o",
-        data: {
-          text: "Try to run it!\n        👇",
-          loading: false,
+        "id": "1751466885315-tpiiywm0o",
+        "data": {
+          "text": "Try to run it!\n        👇",
+          "loading": false
         },
-        position: {
-          x: 1.0376806278530069,
-          y: -130.31553708165086,
+        "position": {
+          "x": 43.194548344241554,
+          "y": -118.51161412106205
         },
-        width: 200,
-        height: 140,
-        type: "annotation",
+        "width": 200,
+        "height": 131,
+        "type": "annotation"
       },
       {
-        id: "1751466924291-57yp9uodp",
-        data: {
-          text: 'Since everything runs locally you need to use your own api key 🔑. \n\nAdd yours using "API Keys" button',
-          loading: false,
+        "id": "1751466924291-57yp9uodp",
+        "data": {
+          "text": "Since everything runs locally you need to use your own api key 🔑. \n\nAdd yours using \"API Keys\" button",
+          "loading": false
         },
-        position: {
-          x: 545.1675253641836,
-          y: 366.56913146761457,
+        "position": {
+          "x": 538.4224265295613,
+          "y": 482.922086364847
         },
-        width: 408,
-        height: 234,
-        type: "annotation",
+        "width": 408,
+        "height": 234,
+        "type": "annotation"
       },
       {
-        id: "1751485569040-mue9brevg",
-        data: {
-          text: "Tips on controls: \n\n- Pan: Space + drag mouse, scroll, middle or right mouse\n- Zoom: Ctrl or ⌘ + scroll\n- Create selection: drag mouse\n- Multiselection: Ctrl or ⌘ + click\n- Delete selection: Backspace or Delete",
-          loading: false,
+        "id": "1751485569040-mue9brevg",
+        "data": {
+          "text": "Tips on controls: \n\n- Pan: Space + drag mouse, scroll, middle or right mouse\n- Zoom: Ctrl or ⌘ + scroll\n- Create selection: drag mouse\n- Multiselection: Shift or Ctrl or ⌘ + click\n- Delete selection: Backspace or Delete",
+          "loading": false
         },
-        position: {
-          x: 4.336204444491898,
-          y: 1030.0451424510065,
+        "position": {
+          "x": -10.840267933407972,
+          "y": 1122.7902514270613
         },
-        width: 618,
-        height: 380,
-        type: "annotation",
+        "width": 634,
+        "height": 304,
+        "type": "annotation"
       },
+      {
+        "id": "-xd-FccYDkt1wWiFpAl97",
+        "data": {
+          "text": "Link nodes together and the output will be passed to the next node when pressing the ▶️ button.",
+          "loading": false
+        },
+        "position": {
+          "x": -699.8620536751525,
+          "y": 238.4490497169009
+        },
+        "width": 435,
+        "height": 173,
+        "type": "annotation"
+      }
     ],
-    edges: [
+    "edges": [
       {
-        id: "xy-edge__1751403213284-7dr7luzzv-1751403232367-q5y2cgwn7",
-        source: "1751403213284-7dr7luzzv",
-        target: "1751403232367-q5y2cgwn7",
-        animated: false,
+        "id": "xy-edge__1751403213284-7dr7luzzv-1751403232367-q5y2cgwn7",
+        "source": "1751403213284-7dr7luzzv",
+        "target": "1751403232367-q5y2cgwn7",
+        "animated": false
       },
       {
-        id: "xy-edge__1751403213284-7dr7luzzv-1751403403486-yzo9zsyv8",
-        source: "1751403213284-7dr7luzzv",
-        target: "1751403403486-yzo9zsyv8",
-        animated: false,
+        "id": "xy-edge__1751403213284-7dr7luzzv-1751403403486-yzo9zsyv8",
+        "source": "1751403213284-7dr7luzzv",
+        "target": "1751403403486-yzo9zsyv8",
+        "animated": false
       },
       {
-        id: "xy-edge__1751403403486-yzo9zsyv8-1751403450109-myk4kx31i",
-        source: "1751403403486-yzo9zsyv8",
-        target: "1751403450109-myk4kx31i",
-        animated: false,
-      },
+        "id": "xy-edge__1751403403486-yzo9zsyv8-1751403450109-myk4kx31i",
+        "source": "1751403403486-yzo9zsyv8",
+        "target": "1751403450109-myk4kx31i",
+        "animated": false
+      }
     ],
-    updatedAt: "2025-07-03T10:04:37.997Z",
-    createdAt: "2025-07-03T10:01:29.718Z",
+    "updatedAt": "2025-07-03T10:13:48.094Z",
+    "createdAt": "2025-07-03T10:01:29.718Z"
   },
   {
     id: "GRIR14q19oJQg5-6M3FSN",

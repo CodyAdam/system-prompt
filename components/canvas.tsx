@@ -75,6 +75,7 @@ export default function Canvas() {
       panOnDrag={panOnDrag}
       selectionMode={SelectionMode.Partial}
       deleteKeyCode={["Backspace", "Delete"]}
+      multiSelectionKeyCode={["Shift", "Control", "Meta"]}
       minZoom={0.2}
       fitViewOptions={{
         padding: 0.1,
