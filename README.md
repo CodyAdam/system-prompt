@@ -1,28 +1,74 @@
+<a href="https://systemprompt.app/" target="_blank" rel="noopener">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" alt="System Prompt" srcset="./public/og-dark.png" />
+    <img alt="System Prompt" src="./public/og.png" />
+  </picture>
+</a>
+
+<h4 align="center">
+  <a href="https://systemprompt.app">System Prompt App</a> |
+  <a href="https://systemprompt.app/blog">Blog</a>
+</h4>
+
 <div align="center">
-
-# System Prompt
-### Make your AI workflows reusable and efficient
-
-![System Prompt](./app/opengraph-image.png)
-
-[![Try it now](https://img.shields.io/badge/Try%20it%20now-systemprompt.app-blue?style=for-the-badge)](https://systemprompt.app)
-
+  <h2>
+    An open source canvas-based AI workflow builder. </br>
+    Reusable and efficient for productivity. </br>
+  <br />
+  </h2>
 </div>
 
-## 🚀 What is System Prompt?
+<br />
+<p align="center">
+  <a href="https://github.com/excalidraw/excalidraw/blob/master/LICENSE">
+    <img alt="System Prompt is released under the MIT license." src="https://img.shields.io/badge/license-MIT-blue.svg"  />
+  </a>
+  <a href="https://docs.excalidraw.com/docs/introduction/contributing">
+    <img alt="PRs welcome!" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat"  />
+  </a>
+  <a href="https://deepwiki.com/codyadam/system-prompt">
+    <img alt="Ask DeepWiki" src="https://deepwiki.com/badge.svg" />
+  </a>
+  <a href="https://twitter.com/codyadm">
+    <img alt="Follow Cody Adam on Twitter" src="https://img.shields.io/twitter/follow/codyadm.svg?label=follow+@codyadm&style=social&logo=twitter"/>
+  </a>
+</p>
 
-**System Prompt** is a free, open-source, locally-run tool that transforms how you interact with AI models. Stop repeating yourself and start building reusable AI workflows with our intuitive visual canvas.
+<div align="center">
+  <figure>
+    <a href="https://systemprompt.app" target="_blank" rel="noopener">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="./public/screenshot-dark.png" />
+        <img src="./public/screenshot.png" alt="Product showcase" />
+      </picture>
+    </a>
+    <figcaption>
+      <p align="center">
+        Create reusable AI workflows with a clean, powerful, and intuitive flow canvas.
+      </p>
+    </figcaption>
+  </figure>
+</div>
 
-## ✨ Key Features
+## Features
 
-- **🔄 Reusable Templates**: Save your AI instructions once, use them forever
-- **🎨 Visual Canvas**: Build complex AI workflows with drag-and-drop simplicity  
-- **🔗 Chain Operations**: Connect multiple AI models and create powerful pipelines
-- **🔑 Bring Your Own API**: Use any AI model with your own API keys
-- **💻 Local & Private**: Runs entirely in your browser - your data stays with you
-- **🆓 Completely Free**: Open-source and always will be
+System Prompt offers:
 
-## 💡 Use Cases
+- 💯&nbsp;Free & open-source.
+- 🎨&nbsp;Infinite, canvas-based workflow builder.
+- 🔄&nbsp;Reusable AI templates and workflows.
+- 🔗&nbsp;Chain multiple AI operations seamlessly.
+- 🔑&nbsp;Bring your own API keys - works with any AI model.
+- 💻&nbsp;Runs entirely in your browser - your data stays private.
+- 🌓&nbsp;Dark mode support.
+- 📱&nbsp;Responsive design works on all devices.
+- 💾&nbsp;Local storage - your workflows are saved automatically.
+- 🎯&nbsp;Drag-and-drop node creation and connection.
+- ✍️&nbsp;Rich text editing with markdown support.
+- 📊&nbsp;Visual flow connections between nodes.
+- 🏷️&nbsp;Annotation nodes for documentation.
+
+## Use Cases
 
 **Email Management**
 - Create email response templates with specific tone and style
@@ -38,22 +84,37 @@
 
 *and many more... check out the [demo examples](https://systemprompt.app)*
 
-## 🛠️ How It Works
+## Quick start
 
-1. **Create Nodes**: Add AI model nodes to your canvas
+**Note:** System Prompt runs entirely in your browser - no installation required!
+
+Simply visit [systemprompt.app](https://systemprompt.app) and start building:
+
+1. **Create Nodes**: Add prompt, AI, markdown, or annotation nodes to your canvas
 2. **Define Instructions**: Set up your system prompts and parameters
 3. **Connect & Chain**: Link nodes to create complex workflows
 4. **Save & Reuse**: Your templates are ready for any future use
 
-## 🚀 Get Started
+## Node Types
 
-Try it now at **[systemprompt.app](https://systemprompt.app)** - no installation required!
+Each node has a Run button, when you click on it, it will run the node and send the result to the next connected node.
 
-## 📚 Credits
+- **Prompt Nodes**: It's a text input, you can use it to provide inputs to your AI nodes. Add a label to differentiate between different prompt nodes.
+- **AI Nodes**: Take any inputs like prompt nodes and generate an LLM response based those inputs, the AI model you choose and the system prompt you provide.
+- **Markdown Nodes**: Format and display outputs as Markdown text from any node connected to it.
+- **Annotation Nodes**: Add documentation and guidance to your canvas. (Not runnable)
+
+## Contributing
+
+- Missing something or found a bug? [Report here](https://github.com/yourusername/system-prompt/issues).
+- Want to contribute? Check out our contribution guide.
+- Have ideas for new features? Let us know in the discussions.
+
+## Credits
 
 - **Canvas**: Powered by [React Flow](https://reactflow.dev/) for smooth visual interactions
 - **Inspiration**: Influenced by [tldraw computer](https://computer.tldraw.com/) with a focus on control and production-ready AI workflows
 
-## 📄 License
+## License
 
 Open source MIT and free to use. See LICENSE for details.
