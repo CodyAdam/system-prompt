@@ -76,7 +76,6 @@ export function AppSidebar() {
   const menuItems = workflows.map((workflow) => (
     <SidebarMenuItem key={workflow.id}>
       <SidebarMenuButton onClick={() => switchWorkflow(workflow.id)} isActive={workflow.id === currentWorkflowId}>
-        <MoreVerticalIcon className="h-5 w-5" />
         <span className="truncate">{workflow.name}</span>
       </SidebarMenuButton>
     </SidebarMenuItem>
