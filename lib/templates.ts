@@ -172,139 +172,134 @@ export const templates: Workflow[] = [
     createdAt: "2025-07-03T11:56:36.973Z",
   },
   {
-    id: "GRIR14q19oJQg5-6M3FSN",
-    name: "Simple proofread ✒️",
-    nodes: [
+    "id": "So_ExWhUmz81nL-fAL1Xg",
+    "name": "Simple proofread ✒️",
+    "nodes": [
       {
-        id: "1",
-        data: {
-          prompt:
-            'Hey, thanks for the offer! I appreciate it, and glad you liked the laptop.€1150 is a bit lower then I was hoping for, given the market value of the components and the excellent condition. Could you meat me at €1250? I think thats a fare price for a system of this caliber."',
-          label: "text",
-          dirty: false,
-          loading: false,
-          output:
-            'Hey, thanks for the offer! I appreciate it, and glad you liked the laptop.€1150 is a bit lower then I was hoping for, given the market value of the components and the excellent condition. Could you meat me at €1250? I think thats a fare price for a system of this caliber."',
+        "id": "1",
+        "data": {
+          "prompt": "Hey man, sorry for not responding sooner, your message was flagged by X\n\nmessy file names are not a problem since the AI will read the content of the file and check for similar files and may rename the file if you want to while organizing it. \n\nThank you for the message, I'll keep you in mind for any design ideas\n\n",
+          "label": "text",
+          "dirty": false,
+          "loading": false,
+          "output": "Hey man, sorry for not responding sooner, your message was flagged by X\n\nmessy file names are not a problem since the AI will read the content of the file and check for similar files and may rename the file if you want to while organizing it. \n\nThank you for the message, I'll keep you in mind for any design ideas\n\n"
         },
-        position: {
-          x: -36.242683728129066,
-          y: 14.497073491251655,
+        "position": {
+          "x": -36.242683728129066,
+          "y": 14.497073491251655
         },
-        width: 500,
-        height: 200,
-        type: "prompt",
+        "width": 500,
+        "height": 200,
+        "type": "prompt"
       },
       {
-        id: "2",
-        data: {
-          systemPrompt:
-            "Proofread this text, fix any english mistakes. \nReplace words for a formal tone.\nOnly respond with the raw improved text.",
-          modelId: "gemini-2.5-flash",
-          loading: false,
-          output:
-            "Thank you for your offer. We appreciate your interest and are pleased you found the laptop satisfactory. However, €1150 is somewhat lower than anticipated, considering the market valuation of its constituent components and its pristine condition. Would you be amenable to a price of €1250? We believe this represents an equitable valuation for a system of this caliber.",
-          dirty: false,
+        "id": "2",
+        "data": {
+          "systemPrompt": "Proofread this text, fix any english mistakes. \nFix wording if confusing but else keep it as is.\nOnly respond with the raw improved text.",
+          "modelId": "gemini-2.5-flash",
+          "loading": false,
+          "output": "Hey man, sorry for not responding sooner, your message was flagged by X.\n\nMessy file names are not a problem, since the AI will read the content of the file, check for similar files, and can rename it during organization if you wish.\n\nThank you for the message; I'll keep you in mind for any design ideas.",
+          "dirty": false
         },
-        position: {
-          x: 133.1902728318821,
-          y: 285.4615944331094,
+        "position": {
+          "x": 133.1902728318821,
+          "y": 285.4615944331094
         },
-        width: 383,
-        height: 272,
-        type: "ai",
+        "width": 383,
+        "height": 272,
+        "type": "ai"
       },
       {
-        id: "3",
-        data: {
-          text: "Thank you for your offer. We appreciate your interest and are pleased you found the laptop satisfactory. However, €1150 is somewhat lower than anticipated, considering the market valuation of its constituent components and its pristine condition. Would you be amenable to a price of €1250? We believe this represents an equitable valuation for a system of this caliber.",
-          loading: false,
-          output:
-            "Thank you for your offer. We appreciate your interest and are pleased you found the laptop satisfactory. However, €1150 is somewhat lower than anticipated, considering the market valuation of its constituent components and its pristine condition. Would you be amenable to a price of €1250? We believe this represents an equitable valuation for a system of this caliber.",
-          dirty: false,
+        "id": "3",
+        "data": {
+          "text": "Hey man, sorry for not responding sooner, your message was flagged by X.\n\nMessy file names are not a problem, since the AI will read the content of the file, check for similar files, and can rename it during organization if you wish.\n\nThank you for the message; I'll keep you in mind for any design ideas.",
+          "loading": false,
+          "output": "Hey man, sorry for not responding sooner, your message was flagged by X.\n\nMessy file names are not a problem, since the AI will read the content of the file, check for similar files, and can rename it during organization if you wish.\n\nThank you for the message; I'll keep you in mind for any design ideas.",
+          "dirty": false
         },
-        position: {
-          x: 32.61841535531619,
-          y: 627.7860575248992,
+        "position": {
+          "x": 32.61841535531619,
+          "y": 627.7860575248992
         },
-        width: 735,
-        height: 279,
-        type: "markdown",
+        "width": 735,
+        "height": 279,
+        "type": "markdown"
       },
       {
-        id: "1751467469616-c71g8nd6h",
-        data: {
-          text: "A very simple example of reusable prompt to proofread a text for you",
-          loading: false,
+        "id": "1751467469616-c71g8nd6h",
+        "data": {
+          "text": "A very simple example of reusable prompt to proofread a text for you",
+          "loading": false
         },
-        position: {
-          x: -224.80988201116537,
-          y: -215.03553931502773,
+        "position": {
+          "x": -224.80988201116537,
+          "y": -215.03553931502773
         },
-        width: 519,
-        height: 175,
-        type: "annotation",
+        "width": 519,
+        "height": 175,
+        "type": "annotation"
       },
       {
-        id: "1751467508141-52xbc0ojt",
-        data: {
-          text: "1. Enter the text here     👉",
-          loading: false,
+        "id": "1751467508141-52xbc0ojt",
+        "data": {
+          "text": "1. Enter the text here     👉",
+          "loading": false
         },
-        position: {
-          x: -353.03233202208617,
-          y: 45.613599248642245,
+        "position": {
+          "x": -353.03233202208617,
+          "y": 45.613599248642245
         },
-        width: 300,
-        height: 200,
-        type: "annotation",
+        "width": 300,
+        "height": 200,
+        "type": "annotation"
       },
       {
-        id: "1751467526300-8adwrz1d8",
-        data: {
-          text: "2. Run the workflow\n\n👇",
-          loading: false,
+        "id": "1751467526300-8adwrz1d8",
+        "data": {
+          "text": "2. Run the workflow\n\n👇",
+          "loading": false
         },
-        position: {
-          x: 405.7057475663977,
-          y: -147.5784695763408,
+        "position": {
+          "x": 407.05085739474293,
+          "y": -146.23335974799556
         },
-        width: 300,
-        height: 200,
-        type: "annotation",
+        "width": 302,
+        "height": 159,
+        "type": "annotation"
       },
       {
-        id: "1751467546814-h23l7543b",
-        data: {
-          text: "3. Copy your proofreaded text\n\n👇",
-          loading: false,
+        "id": "1751467546814-h23l7543b",
+        "data": {
+          "text": "3. Copy your proofreaded text\n\n👇",
+          "loading": false
         },
-        position: {
-          x: 635.9807984061978,
-          y: 457.7650496024453,
+        "position": {
+          "x": 635.9807984061978,
+          "y": 457.7650496024453
         },
-        width: 355,
-        height: 198,
-        type: "annotation",
-      },
+        "width": 355,
+        "height": 166,
+        "type": "annotation"
+      }
     ],
-    edges: [
+    "edges": [
       {
-        id: "1-2",
-        source: "1",
-        target: "2",
-        type: "default",
-        animated: false,
+        "id": "1-2",
+        "source": "1",
+        "target": "2",
+        "type": "default",
+        "animated": false
       },
       {
-        id: "2-3",
-        source: "2",
-        target: "3",
-        type: "default",
-        animated: false,
-      },
+        "id": "2-3",
+        "source": "2",
+        "target": "3",
+        "type": "default",
+        "animated": false
+      }
     ],
-    updatedAt: "2025-07-03T08:14:25.450Z",
-    createdAt: "2025-07-03T08:14:25.312Z",
+    "updatedAt": "2025-07-03T13:08:44.258Z",
+    "createdAt": "2025-07-03T11:56:36.873Z"
   },
   {
     id: "1751384543676-ast6lj06g",
