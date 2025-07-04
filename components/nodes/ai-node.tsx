@@ -266,41 +266,45 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
       <div className="p-3 gap-3 flex flex-col h-full overflow-hidden">
         <div className="flex items-center gap-2 flex-wrap">
           <p className="text-sm text-muted-foreground"> {provider ? `Using ${provider}` : "No model selected"}</p>
-          <ToggleGroup
-            type="single"
-            value={parsedData.data.reasoning ? "reasoning" : undefined}
-            onValueChange={handleReasoningChange}
-            className="ml-auto"
-          >
-            <ToggleGroupItem
-              value="reasoning"
-              variant={parsedData.data.reasoning ? "default" : "outline"}
-              size="sm"
-              title={
-                parsedData.data.reasoning ? "Reasoning is enabled (not all models support it)" : "Reasoning is disabled"
-              }
-              className="size-9"
+          <div className="flex items-center gap-2">
+            <ToggleGroup
+              type="single"
+              value={parsedData.data.reasoning ? "reasoning" : undefined}
+              onValueChange={handleReasoningChange}
+              className="ml-auto"
             >
-              {parsedData.data.reasoning ? <RiBrainFill className="size-5" /> : <RiBrainLine className="size-5" />}
-            </ToggleGroupItem>
-          </ToggleGroup>
-          <Select value={parsedData.data.modelId} onValueChange={handleModelChange}>
-            <SelectTrigger className="nodrag ">
-              <SelectValue placeholder="Select an AI model" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.entries(providers).map(([provider, { models }]) => (
-                <SelectGroup key={provider}>
-                  <SelectLabel>{provider}</SelectLabel>
-                  {models.map((model) => (
-                    <SelectItem key={model} value={model}>
-                      {model}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              ))}
-            </SelectContent>
-          </Select>
+              <ToggleGroupItem
+                value="reasoning"
+                variant={parsedData.data.reasoning ? "default" : "outline"}
+                size="sm"
+                title={
+                  parsedData.data.reasoning
+                    ? "Reasoning is enabled (not all models support it)"
+                    : "Reasoning is disabled"
+                }
+                className="size-9"
+              >
+                {parsedData.data.reasoning ? <RiBrainFill className="size-5" /> : <RiBrainLine className="size-5" />}
+              </ToggleGroupItem>
+            </ToggleGroup>
+            <Select value={parsedData.data.modelId} onValueChange={handleModelChange}>
+              <SelectTrigger className="nodrag ">
+                <SelectValue placeholder="Select an AI model" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(providers).map(([provider, { models }]) => (
+                  <SelectGroup key={provider}>
+                    <SelectLabel>{provider}</SelectLabel>
+                    {models.map((model) => (
+                      <SelectItem key={model} value={model}>
+                        {model}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         {provider && !key && (
           <button
