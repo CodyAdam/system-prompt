@@ -13,20 +13,26 @@ import { useApiKeysStore } from "@/lib/api-key-store";
 import { baseNodeDataSchema } from "@/lib/base-node";
 import { ComputeNodeFunction, ComputeNodeInput, formatInputs } from "@/lib/compute";
 import { useWorkflowStore } from "@/lib/workflow-store";
-import { RiSearchEyeLine } from "@remixicon/react";
+import { AnthropicProviderOptions } from "@ai-sdk/anthropic";
+import { GoogleGenerativeAIProviderOptions } from "@ai-sdk/google";
+import {} from "@ai-sdk/openai";
+import { RiBrainFill, RiBrainLine, RiSearchEyeLine } from "@remixicon/react";
 import { Handle, Position, type NodeTypes } from "@xyflow/react";
-import { generateText } from "ai";
+import { generateText, streamText, TextStreamPart, ToolSet } from "ai";
 import { useCallback, useMemo, useState } from "react";
 import { z } from "zod";
 import { DebouncedTextarea } from "../debounced-textarea";
-import { buttonVariants } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { ErrorNode } from "./error-node";
+import { MarkdownNodeData } from "./markdown-node";
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 
 export const aiNodeDataSchema = baseNodeDataSchema.extend({
   systemPrompt: z.string(),
   modelId: z.string().optional(),
+  reasoning: z.boolean().optional(),
 });
 
 type AiNodeData = z.infer<typeof aiNodeDataSchema>;
@@ -34,7 +40,8 @@ type AiNodeData = z.infer<typeof aiNodeDataSchema>;
 export const computeAi: ComputeNodeFunction<AiNodeData> = async (
   inputs: ComputeNodeInput[],
   data: AiNodeData,
-  abortSignal?: AbortSignal
+  abortSignal: AbortSignal,
+  nodeId: string
 ) => {
   if (!data.modelId) {
     return {
@@ -59,22 +66,66 @@ export const computeAi: ComputeNodeFunction<AiNodeData> = async (
       error: `No API key found for model ${data.modelId}`,
     };
   }
+  const connectedChilds = useWorkflowStore
+    .getState()
+    .getEdges()
+    .filter((edge) => edge.source === nodeId);
+  const childNodes = connectedChilds
+    .map((edge) => useWorkflowStore.getState().getNode(edge.target))
+    .filter((node): node is NonNullable<typeof node> => node !== null);
+  const markdownChilds = childNodes.filter((node) => node.type === "markdown");
 
-  const client = provider.createClient(key);
+  let fullText: string = ""; // include reasoning
+  let outputText = "";
 
-  let generatedText: string;
   try {
-    if (abortSignal?.aborted) {
-      throw new Error("Operation was aborted");
-    }
+    const model = provider.createModel(key, data.modelId, data.reasoning ?? false);
 
-    const res = await generateText({
-      model: client(data.modelId),
+    const res = streamText({
+      model,
       system: data.systemPrompt,
       prompt: formatInputs(inputs),
       abortSignal, // Pass abort signal to AI call
+      providerOptions: {
+        google: {
+          thinkingConfig: {
+            thinkingBudget: data.reasoning ? -1 : 0,
+            includeThoughts: true,
+          },
+          responseModalities: ["TEXT"],
+        } satisfies GoogleGenerativeAIProviderOptions,
+        anthropic: {
+          thinking: {
+            type: data.reasoning ? "enabled" : "disabled",
+          },
+        } satisfies AnthropicProviderOptions,
+      },
     });
-    generatedText = res.text;
+
+    const fullstream = res.fullStream; // AsyncIterableStream<TextStreamPart<ToolSet>>
+    // get the reasoning stream and console log it
+    for await (const chunk of fullstream) {
+      let triggerChildRerender = false;
+      if (chunk.type === "reasoning") {
+        if (fullText.length === 0) fullText += "> ";
+        fullText += chunk.textDelta.replace(/\n/g, "\n> ");
+        triggerChildRerender = true;
+      }
+      if (chunk.type === "text-delta") {
+        outputText += chunk.textDelta;
+        triggerChildRerender = true;
+      }
+      console.log(chunk);
+      if (triggerChildRerender)
+        markdownChilds.forEach((node) => {
+          useWorkflowStore.getState().updateNodeData(node.id, {
+            text: fullText,
+            loading: false,
+            error: undefined,
+            dirty: false,
+          } satisfies MarkdownNodeData);
+        });
+    }
   } catch (error) {
     console.error(error);
     return {
@@ -87,7 +138,7 @@ export const computeAi: ComputeNodeFunction<AiNodeData> = async (
     ...data,
     error: undefined,
     dirty: false,
-    output: generatedText,
+    output: outputText,
   };
 };
 
@@ -149,6 +200,11 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
     [props.id, updateNodeData]
   );
 
+  const handleReasoningChange = useCallback(
+    () => updateNodeData(props.id, { reasoning: !parsedData.data?.reasoning, dirty: true, error: undefined }),
+    [props.id, updateNodeData, parsedData.data?.reasoning]
+  );
+
   const provider = useMemo(() => {
     if (!parsedData.success || !parsedData.data?.modelId) {
       return null;
@@ -206,8 +262,26 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
       <div className="p-3 gap-3 flex flex-col h-full overflow-hidden">
         <div className="flex items-center gap-2 flex-wrap">
           <p className="text-sm text-muted-foreground"> {provider ? `Using ${provider}` : "No model selected"}</p>
+          <ToggleGroup
+            type="single"
+            value={parsedData.data.reasoning ? "reasoning" : undefined}
+            onValueChange={handleReasoningChange}
+            className="ml-auto"
+          >
+            <ToggleGroupItem
+              value="reasoning"
+              variant={parsedData.data.reasoning ? "default" : "outline"}
+              size="sm"
+              title={
+                parsedData.data.reasoning ? "Reasoning is enabled (not all models support it)" : "Reasoning is disabled"
+              }
+              className="size-9"
+            >
+              {parsedData.data.reasoning ? <RiBrainFill className="size-5" /> : <RiBrainLine className="size-5" />}
+            </ToggleGroupItem>
+          </ToggleGroup>
           <Select value={parsedData.data.modelId} onValueChange={handleModelChange}>
-            <SelectTrigger className="nodrag ml-auto">
+            <SelectTrigger className="nodrag ">
               <SelectValue placeholder="Select an AI model" />
             </SelectTrigger>
             <SelectContent>
@@ -225,7 +299,10 @@ export const AiNode: NodeTypes[keyof NodeTypes] = (props) => {
           </Select>
         </div>
         {provider && !key && (
-          <button onClick={() => setApiKeysOpen(true)} className="text-xs text-destructive -mt-1 hover:underline cursor-pointer text-left underline-offset-4 w-fit">
+          <button
+            onClick={() => setApiKeysOpen(true)}
+            className="text-xs text-destructive -mt-1 hover:underline cursor-pointer text-left underline-offset-4 w-fit"
+          >
             API key is not configured for {provider}. Click here to set it.
           </button>
         )}

@@ -1,18 +1,14 @@
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createAnthropic } from "@ai-sdk/anthropic";
+import { LanguageModelV1 } from "ai";
 
 export const providers: Record<
   string,
   {
     models: string[];
     keyUrl: string;
-    createClient: (
-      apiKey: string
-    ) =>
-      | ReturnType<typeof createGoogleGenerativeAI>
-      | ReturnType<typeof createOpenAI>
-      | ReturnType<typeof createAnthropic>;
+    createModel: (apiKey: string, modelId: string, reasoning: boolean) => LanguageModelV1;
   }
 > = {
   "Google Generative AI": {
@@ -30,11 +26,13 @@ export const providers: Record<
       "gemini-exp-1206",
       "gemma-3-27b-it",
     ],
-    createClient(apiKey: string) {
+    createModel(apiKey: string, modelId: string) {
       const google = createGoogleGenerativeAI({
         apiKey,
       });
-      return google;
+      return google(modelId, {
+        useSearchGrounding: true,
+      });
     },
   },
   OpenAI: {
@@ -56,12 +54,14 @@ export const providers: Record<
       "gpt-3.5-turbo",
       "chatgpt-4o-latest",
     ],
-    createClient(apiKey) {
+    createModel(apiKey, modelId, reasoning) {
       const openai = createOpenAI({
         apiKey,
         compatibility: "strict",
       });
-      return openai;
+      return openai(modelId, {
+        reasoningEffort: reasoning ? "medium" : undefined,
+      });
     },
   },
   Anthropic: {
@@ -76,11 +76,12 @@ export const providers: Record<
       "claude-3-sonnet-20240229",
       "claude-3-haiku-20240307",
     ],
-    createClient(apiKey) {
+    createModel(apiKey, modelId) {
       const anthropic = createAnthropic({
         apiKey,
+        headers: { "anthropic-dangerous-direct-browser-access": "true" },
       });
-      return anthropic;
+      return anthropic(modelId);
     },
   },
 };

@@ -19,7 +19,7 @@ type PromptNodeData = z.infer<typeof promptNodeDataSchema>;
 export const computePrompt: ComputeNodeFunction<PromptNodeData> = async (
   inputs: ComputeNodeInput[],
   data: PromptNodeData,
-  abortSignal?: AbortSignal
+  abortSignal: AbortSignal,
 ) => {
   const currentData = { ...data };
   if (inputs.length > 0) {

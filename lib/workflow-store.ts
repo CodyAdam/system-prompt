@@ -477,7 +477,7 @@ export const useWorkflowStore = create<WorkflowState>()(
 
         let newData: typeof nodeData;
         try {
-          newData = await Promise.race([computeNode(node.type, inputs, nodeData, abortSignal), timeoutPromise]);
+          newData = await Promise.race([computeNode(node.type, inputs, nodeData, abortSignal, nodeId), timeoutPromise]);
         } catch (error) {
           // Handle abort or other errors
           parentEdges.forEach((e) => {

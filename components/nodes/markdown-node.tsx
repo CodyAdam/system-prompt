@@ -15,12 +15,12 @@ const markdownNodeDataSchema = baseNodeDataSchema.extend({
   text: z.string().optional(),
 });
 
-type MarkdownNodeData = z.infer<typeof markdownNodeDataSchema>;
+export type MarkdownNodeData = z.infer<typeof markdownNodeDataSchema>;
 
 export const computeMarkdown: ComputeNodeFunction<MarkdownNodeData> = async (
   inputs: ComputeNodeInput[],
   data: MarkdownNodeData,
-  abortSignal?: AbortSignal
+  abortSignal: AbortSignal
 ) => {
   await new Promise((resolve) => setTimeout(resolve, 300));
 
