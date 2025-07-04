@@ -1,6 +1,7 @@
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createAnthropic } from "@ai-sdk/anthropic";
+import { createXai } from "@ai-sdk/xai";
 import { LanguageModelV1 } from "ai";
 
 export const providers: Record<
@@ -82,6 +83,24 @@ export const providers: Record<
         headers: { "anthropic-dangerous-direct-browser-access": "true" },
       });
       return anthropic(modelId);
+    },
+  },
+  xAI: {
+    keyUrl: "https://console.x.ai/",
+    models: [
+      "grok-3",
+      "grok-3-fast",
+      "grok-3-mini",
+      "grok-3-mini-fast",
+      "grok-2-1212",
+      "grok-2",
+      "grok-beta",
+    ],
+    createModel(apiKey, modelId) {
+      const xai = createXai({
+        apiKey,
+      });
+      return xai(modelId);
     },
   },
 };

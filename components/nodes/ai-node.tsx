@@ -28,6 +28,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/
 import { ErrorNode } from "./error-node";
 import { MarkdownNodeData } from "./markdown-node";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
+import { XaiProviderSettings } from "@ai-sdk/xai";
 
 export const aiNodeDataSchema = baseNodeDataSchema.extend({
   systemPrompt: z.string(),
@@ -99,6 +100,9 @@ export const computeAi: ComputeNodeFunction<AiNodeData> = async (
             type: data.reasoning ? "enabled" : "disabled",
           },
         } satisfies AnthropicProviderOptions,
+        xai: {
+          reasoningEffort: data.reasoning ? "medium" : null,
+        },
       },
     });
 
